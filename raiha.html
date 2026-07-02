@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Control Panel | Raiha Mehdi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/material-symbols:terminal.svg?color=%2322d3ee">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        bgMain: '#0B0F19',
+                        bgCard: '#111827',
+                        accent: '#22D3EE',
+                        textMain: '#E5E7EB',
+                        textMuted: '#9CA3AF',
+                        borderSystem: '#1F2937'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0B0F19;
+            color: #E5E7EB;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom subtle grid background animation */
+        .grid-bg {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(31, 41, 55, 0.2) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(31, 41, 55, 0.2) 1px, transparent 1px);
+        }
+        .scanline {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(34, 211, 238, 0.03) 50%,
+                rgba(255,255,255,0)
+            );
+            animation: scan 8s linear infinite;
+        }
+        @keyframes scan {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden min-h-screen selection:bg-cyan-500 selection:text-black">
+
+    <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
+    <div class="fixed inset-0 scanline pointer-events-none z-50"></div>
+
+    <header class="sticky top-0 z-40 w-full border-b border-borderSystem bg-bgMain/80 backdrop-blur-md px-6 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
+        <div class="flex items-center gap-3">
+            <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+            <span class="tracking-widest text-textMain">RM__BACKEND_ENGINE_v2.6</span>
+        </div>
+        <nav class="hidden md:flex gap-6 uppercase tracking-wider">
+            <a href="#status" class="hover:text-accent transition-colors">/System-Status</a>
+            <a href="#projects" class="hover:text-accent transition-colors">/Core-Systems</a>
+            <a href="#architecture" class="hover:text-accent transition-colors">/Architecture</a>
+            <a href="#contact" class="hover:text-accent transition-colors">/Connect</a>
+        </nav>
+        <div class="text-right hidden sm:block font-mono text-cyan-400/70">
+            LOC_SYS: [31.5204° N, 74.3587° E]
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 space-y-24">
+
+        <section class="min-h-[70vh] flex flex-col justify-center py-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+                
+                <!-- Text -->
+                <div class="lg:col-span-7 order-1">
+                    <div class="font-mono text-xs text-accent uppercase tracking-[0.2em] mb-4">
+                        [ Initializing Secure Handshake ... Success ]
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-bold text-textMain tracking-tight mb-2">
+                        Hi, I’m <span class="text-transparent bg-clip-text bg-gradient-to-r from-textMain to-accent">Raiha Mehdi</span>
+                    </h1>
+                    <h2 class="text-xl sm:text-2xl font-mono text-textMuted uppercase tracking-wider mb-6">
+                        &lt; Backend Software Engineer /&gt;
+                    </h2>
+                    <p class="text-base sm:text-lg text-textMuted max-w-2xl leading-relaxed mb-8 font-sans">
+                        Building secure FinTech systems, data-driven applications, and AI-powered backend architectures using Python & Django. Focused on data integrity, high-concurrency optimization, and clean architectural design.
+                    </p>
+                    <div class="flex flex-wrap gap-4 font-mono text-xs">
+                        <a href="#projects" class="px-6 py-3 border border-accent text-accent bg-accent/5 hover:bg-accent hover:text-bgMain transition-all duration-200 uppercase tracking-widest flex items-center gap-2">
+                            <i class="fa-solid fa-terminal text-[10px]"></i> View Projects
+                        </a>
+                        <a href="https://github.com/raihamehdi" target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-borderSystem text-textMain bg-bgCard hover:border-textMuted transition-all duration-200 uppercase tracking-widest flex items-center gap-2">
+                            <i class="fa-brands fa-github text-sm"></i> GitHub
+                        </a>
+                        <a href="#contact" class="px-6 py-3 border border-borderSystem text-textMain bg-bgCard hover:border-textMuted transition-all duration-200 uppercase tracking-widest flex items-center gap-2">
+                            <i class="fa-solid fa-envelope text-[10px]"></i> Contact
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Image -->
+            <div class="lg:col-span-5 order-2 flex justify-center lg:justify-end mt-8 lg:mt-0">
+                    <div class="relative group p-1.5 border border-borderSystem rounded-full bg-bgCard">
+                        <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/30 group-hover:rotate-45 transition-transform duration-700 pointer-events-none"></div>
+                        
+                        <img src="raiha.png" alt="Raiha Mehdi" class="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full object-cover grayscale contrast-125 brightness-90 group-hover:grayscale-0 transition-all duration-300 border border-borderSystem">
+                        
+                        <span class="absolute bottom-4 right-4 w-5 h-5 bg-emerald-400 border-4 border-bgMain rounded-full shadow-[0_0_12px_#34d399]"></span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <section id="status" class="scroll-mt-20">
+            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-6">
+                <span class="text-accent">&gt;</span> ## System Status
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 font-mono mb-8">
+                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
+                    <span class="text-[10px] text-textMuted uppercase tracking-wider">FinTech Systems</span>
+                    <span class="text-lg font-bold text-emerald-400 flex items-center gap-2 mt-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> ACTIVE
+                    </span>
+                </div>
+                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
+                    <span class="text-[10px] text-textMuted uppercase tracking-wider">Backend Architecture</span>
+                    <span class="text-lg font-bold text-emerald-400 flex items-center gap-2 mt-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> SCALABLE
+                    </span>
+                </div>
+                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
+                    <span class="text-[10px] text-textMuted uppercase tracking-wider">AI Modules</span>
+                    <span class="text-lg font-bold text-cyan-400 flex items-center gap-2 mt-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> OPERATIONAL
+                    </span>
+                </div>
+                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
+                    <span class="text-[10px] text-textMuted uppercase tracking-wider">Data Systems</span>
+                    <span class="text-lg font-bold text-emerald-400 flex items-center gap-2 mt-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RUNNING
+                    </span>
+                </div>
+                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
+                    <span class="text-[10px] text-textMuted uppercase tracking-wider">Trading Systems</span>
+                    <span class="text-lg font-bold text-amber-400 flex items-center gap-2 mt-2">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> ANALYTICAL MODE
+                    </span>
+                </div>
+            </div>
+
+            <div class="bg-bgCard border border-borderSystem p-5 rounded-sm max-w-3xl">
+                <p class="text-sm text-textMuted leading-relaxed">
+                    <span class="text-accent font-mono font-bold">INFO:</span> A backend engineer focused on building structured, reliable, and scalable financial technology systems.
+                </p>
+            </div>
+        </section>
+
+
+
+        <section id="projects" class="scroll-mt-20">
+            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
+                <span class="text-accent">&gt;</span> ## Core Project Systems
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
+                        <span>SYS_ID: 01_STRATEGY_ANALYTICS</span>
+                        <span class="px-2 py-0.5 border border-emerald-500/30 text-emerald-400 text-[10px] uppercase bg-emerald-500/5">Production-grade personal system</span>
+                    </div>
+                    <div class="p-6 flex-1 space-y-4">
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
+                            <h3 class="text-lg font-bold text-textMain mt-0.5">Trading Journal & Strategy Analytics System</h3>
+                        </div>
+                        <div>
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
+                            <div class="font-mono text-xs flex flex-wrap gap-2">
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">PostgreSQL</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Bootstrap</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django ORM</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-textMuted leading-relaxed">
+                            A structured trading performance system that converts trading behavior into measurable data-driven insights.
+                        </p>
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
+                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
+                                <li><span class="text-cyan-400/60">■</span> Trade journaling engine</li>
+                                <li><span class="text-cyan-400/60">■</span> Performance analytics dashboard</li>
+                                <li><span class="text-cyan-400/60">■</span> Psychological behavior tracking</li>
+                                <li><span class="text-cyan-400/60">■</span> Strategy evaluation system (SMC-based logic)</li>
+                                <li><span class="text-cyan-400/60">■</span> Session & timeframe breakdown</li>
+                                <li><span class="text-cyan-400/60">■</span> Continuous refinement loop</li>
+                            </ul>
+                        </div>
+                        <div class="pt-2 border-t border-borderSystem/50">
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
+                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
+                                Aggregation-based analytics engine; behavioral data modeling system; modular strategy evaluation architecture configured around Smart Money Concepts (BOS, CHoCH, liquidity zones).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
+                        <span>SYS_ID: 02_CRYPTO_INTELLIGENCE</span>
+                        <span class="px-2 py-0.5 border border-amber-500/30 text-amber-400 text-[10px] uppercase bg-amber-500/5">Research + production hybrid system</span>
+                    </div>
+                    <div class="p-6 flex-1 space-y-4">
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
+                            <h3 class="text-lg font-bold text-textMain mt-0.5">Crypto Market Intelligence & Pattern Analysis System</h3>
+                        </div>
+                        <div>
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
+                            <div class="font-mono text-xs flex flex-wrap gap-2">
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Pandas</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">CCXT</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Plotly</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-textMuted leading-relaxed">
+                            A system that analyzes crypto market behavior using structured pattern recognition and correlation analysis.
+                        </p>
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
+                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
+                                <li><span class="text-cyan-400/60">■</span> Market pattern classification engine</li>
+                                <li><span class="text-cyan-400/60">■</span> BTC correlation visualizer</li>
+                                <li><span class="text-cyan-400/60">■</span> On-chain behavior analysis</li>
+                                <li><span class="text-cyan-400/60">■</span> Sentiment + technical fusion model</li>
+                                <li><span class="text-cyan-400/60">■</span> 12+ predefined behavior classes</li>
+                                <li><span class="text-cyan-400/60">■</span> Multi-factor asset scoring matrix</li>
+                            </ul>
+                        </div>
+                        <div class="pt-2 border-t border-borderSystem/50">
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
+                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
+                                Multi-layer data processing pipeline; statistical correlation engine; pattern classification system mapping pump-and-dump structures and liquidity traps via rolling timeframes (1H to 1W).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
+                        <span>SYS_ID: 03_RESTAURANT_REST_API</span>
+                        <span class="px-2 py-0.5 border border-cyan-500/30 text-cyan-400 text-[10px] uppercase bg-cyan-500/5">Production-Ready API System</span>
+                    </div>
+                    <div class="p-6 flex-1 space-y-4">
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
+                            <h3 class="text-lg font-bold text-textMain mt-0.5">High-Performance Restaurant Review System</h3>
+                        </div>
+                        <div>
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
+                            <div class="font-mono text-xs flex flex-wrap gap-2">
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django REST Framework</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Redis</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">NLP Models</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-textMuted leading-relaxed">
+                            A Django REST API-based application enabling optimized restaurant browsing, structural review submissions, and caching analytics processing.
+                        </p>
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
+                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
+                                <li><span class="text-cyan-400/60">■</span> RESTful data retrieval engine</li>
+                                <li><span class="text-cyan-400/60">■</span> In-memory leaderboard caching</li>
+                                <li><span class="text-cyan-400/60">■</span> Automated sentiment classifier</li>
+                                <li><span class="text-cyan-400/60">■</span> High-throughput review pipelines</li>
+                            </ul>
+                        </div>
+                        <div class="pt-2 border-t border-borderSystem/50">
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
+                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
+                                Incorporated NLP-based text models to automatically run sentiment categorization; engineered an in-memory high-speed leaderboard architecture leveraging Redis primitives.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
+                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
+                        <span>SYS_ID: 04_SECURE_IOT</span>
+                        <span class="px-2 py-0.5 border border-purple-500/30 text-purple-400 text-[10px] uppercase bg-purple-500/5">Prototype system</span>
+                    </div>
+                    <div class="p-6 flex-1 space-y-4">
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
+                            <h3 class="text-lg font-bold text-textMain mt-0.5">Smart Watt Secure IoT System</h3>
+                        </div>
+                        <div>
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
+                            <div class="font-mono text-xs flex flex-wrap gap-2">
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Machine Learning</span>
+                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Stripe / PayPal Gateway</span>
+                            </div>
+                        </div>
+                        <p class="text-sm text-textMuted leading-relaxed">
+                            An intelligent system that detects anomalies in electrical systems and integrates payment APIs for monitoring and control.
+                        </p>
+                        <div>
+                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
+                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
+                                <li><span class="text-cyan-400/60">■</span> Anomaly detection engine</li>
+                                <li><span class="text-cyan-400/60">■</span> Real-time monitoring system</li>
+                                <li><span class="text-cyan-400/60">■</span> Payment API integration layer</li>
+                                <li><span class="text-cyan-400/60">■</span> Real-time emergency alert dispatch</li>
+                            </ul>
+                        </div>
+                        <div class="pt-2 border-t border-borderSystem/50">
+                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
+                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
+                                Event-driven monitoring logic; ML model layer calculating trend variations against suspicious consumption thresholds; dynamic programmatic billing engine.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300 lg:col-span-2">
+                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
+                        <span>SYS_ID: 05_LAND_MANAGEMENT</span>
+                        <span class="px-2 py-0.5 border border-blue-500/30 text-blue-400 text-[10px] uppercase bg-blue-500/5">Production Ingestion System</span>
+                    </div>
+                    <div class="p-6 flex-1 space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="md:col-span-2">
+                                <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
+                                <h3 class="text-lg font-bold text-textMain mt-0.5">Secure Land Management & Transaction Ledger</h3>
+                                <p class="text-sm text-textMuted leading-relaxed mt-2">
+                                    A robust web application designed to streamline land registration, execution transactions, buying mechanisms, and multi-parameter plot queries.
+                                </p>
+                            </div>
+                            <div>
+                                <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
+                                <div class="font-mono text-xs flex flex-wrap gap-2">
+                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
+                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
+                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">SQLite / PostgreSQL</span>
+                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">FinTech Integration</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-borderSystem/50">
+                            <div>
+                                <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
+                                <ul class="text-xs text-textMuted space-y-1 font-mono">
+                                    <li><span class="text-cyan-400/60">■</span> Secure asymmetric profile validation</li>
+                                    <li><span class="text-cyan-400/60">■</span> Hierarchical role-based dashboards</li>
+                                    <li><span class="text-cyan-400/60">■</span> Atomic transaction record processing</li>
+                                    <li><span class="text-cyan-400/60">■</span> Multi-provider integration (Stripe, Easypaisa, JazzCash)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
+                                <p class="text-xs font-mono text-textMain/90 leading-relaxed">
+                                    Enforced bulletproof backend data validation constraints across ACID CRUD boundaries; mapped safe role isolation layers preventing multi-party ledger collision vulnerabilities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+
+        <section id="architecture" class="scroll-mt-20">
+            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
+                <span class="text-accent">&gt;</span> ## System Architecture Thinking
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm font-mono">
+                    <span class="text-[10px] text-textMuted tracking-wider uppercase block mb-4">// DISTRIBUTED DATA FLOW PIPELINE</span>
+                    <div class="flex flex-col gap-2 text-xs">
+                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
+                            Frontend Application Layer
+                        </div>
+                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> HTTP / gRPC</div>
+                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain border-l-2 border-l-cyan-400">
+                            API Gateway / Request Router Layer
+                        </div>
+                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> Validation Pass</div>
+                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
+                            Core Business Logic (Service Layer)
+                        </div>
+                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> ORM / Query</div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMuted">
+                                Data Storage (PostgreSQL)
+                            </div>
+                            <div class="border border-cyan-500/30 bg-cyan-950/20 p-3 rounded text-center text-accent">
+                                Real-Time Analytics Engine
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm font-mono">
+                    <span class="text-[10px] text-textMuted tracking-wider uppercase block mb-4">// ANALYTICAL INGESTION ENGINE PIPELINE</span>
+                    <div class="flex flex-col gap-2 text-xs">
+                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMuted">
+                            Unstructured Market / Broker Input
+                        </div>
+                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> Ingestion Stream</div>
+                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
+                            Strict Schema Validation Engine
+                        </div>
+                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> ACID Transaction Block</div>
+                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
+                            Relational Database & Write Ledger
+                        </div>
+                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> Async Processing</div>
+                        <div class="border border-cyan-500/40 bg-bgMain p-3 rounded text-center text-accent font-bold">
+                            Insights Dashboard & Metrics Generator
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section>
+            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
+                <span class="text-accent">&gt;</span> ## Financial Systems Engineering
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="space-y-4 font-mono text-xs sm:text-sm">
+                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
+                        <span class="text-textMain font-bold block text-base">Payment Systems</span>
+                        <span class="text-textMuted">Idempotent execution matrices preventing duplicate transaction states across global and localized processing networks including Stripe, PayPal, EasyPaisa, and JazzCash pipelines.</span>
+                    </div>
+                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
+                        <span class="text-textMain font-bold block text-base">Transaction Processing</span>
+                        <span class="text-textMuted">Strict adherence to ACID properties and low isolation-leak designs.</span>
+                    </div>
+                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
+                        <span class="text-textMain font-bold block text-base">Data Consistency Models</span>
+                        <span class="text-textMuted">Deterministic state-machines mapping complex cross-market financial objects.</span>
+                    </div>
+                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
+                        <span class="text-textMain font-bold block text-base">Trading Systems</span>
+                        <span class="text-textMuted">Mathematical execution evaluation frameworks for market logic metrics.</span>
+                    </div>
+                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
+                        <span class="text-textMain font-bold block text-base">Financial Analytics</span>
+                        <span class="text-textMuted">Rolling statistics, multi-factor scoring, and technical sentiment fusion data models.</span>
+                    </div>
+                </div>
+                
+                <div class="border border-borderSystem bg-bgCard p-8 text-center rounded-sm">
+                    <p class="text-lg font-mono text-textMain italic">
+                        "I design backend systems where data integrity, reliability, and precision are critical."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section>
+            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
+                <span class="text-accent">&gt;</span> ## Engineering Philosophy
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
+                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
+                    <div class="text-accent text-lg mb-2">01 //</div>
+                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">Data integrity over UI complexity</div>
+                    <p class="text-xs text-textMuted leading-relaxed">Elegant frontend systems matter less than accurate transactions and flawless database models.</p>
+                </div>
+                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
+                    <div class="text-accent text-lg mb-2">02 //</div>
+                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">System design over quick implementations</div>
+                    <p class="text-xs text-textMuted leading-relaxed">Upfront schematic mapping saves countless development cycles over reactive code alterations.</p>
+                </div>
+                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
+                    <div class="text-accent text-lg mb-2">03 //</div>
+                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">Structured modeling over raw scripts</div>
+                    <p class="text-xs text-textMuted leading-relaxed">Object-oriented representations and design patterns override raw scripts every single time.</p>
+                </div>
+                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
+                    <div class="text-accent text-lg mb-2">04 //</div>
+                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">Reliability over shortcuts</div>
+                    <p class="text-xs text-textMuted leading-relaxed">Zero performance trade-offs that compromise transactional safety. Shortcuts are technical debt.</p>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section id="contact" class="pb-12 scroll-mt-20">
+            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
+                <span class="text-accent">&gt;</span> ## Terminate Session / Establish Contact
+            </div>
+
+            <div class="border border-borderSystem bg-bgCard p-6 max-w-2xl rounded-sm font-mono text-xs sm:text-sm">
+                <div class="mb-4 text-textMuted">// Run communication interface protocol</div>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-4">
+                        <span class="w-24 text-accent uppercase tracking-wider text-xs">GitHub:</span>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:underline text-textMain break-all">github.com/raihamehdi</a>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="w-24 text-accent uppercase tracking-wider text-xs">LinkedIn:</span>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:underline text-textMain break-all">linkedin.com/in/raiha-mehdi-423916243</a>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="w-24 text-accent uppercase tracking-wider text-xs">Email:</span>
+                        <a href="mailto:engineering@example.com" class="hover:underline text-textMain break-all">raihamehdi@gmail.com</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="border-t border-borderSystem bg-bgCard/40 py-6 text-center font-mono text-[10px] text-textMuted">
+        <p>© 2026 Raiha Mehdi. All Rights Reserved. System status: stable. Encryption active.</p>
+    </footer>
+
+</body>
+</html>
