@@ -1,556 +1,582 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engineering Control Panel | Raiha Mehdi</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>raihamehdi // Core Systems Architecture Workspace</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="icon" type="image/svg+xml" href="https://api.iconify.design/material-symbols:terminal.svg?color=%2322d3ee">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        bgMain: '#0B0F19',
-                        bgCard: '#111827',
-                        accent: '#22D3EE',
-                        textMain: '#E5E7EB',
-                        textMuted: '#9CA3AF',
-                        borderSystem: '#1F2937'
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
-                    },
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B0D13'/%3E%3Cpath d='M30 30 L55 50 L30 70 M60 70 L80 70' stroke='%23FFB236' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
     <style>
         body {
-            background-color: #0B0F19;
-            color: #E5E7EB;
-            font-family: 'Inter', sans-serif;
+            font-family: 'JetBrains Mono', monospace;
+            background-color: #020204;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
-        /* Custom subtle grid background animation */
-        .grid-bg {
-            background-size: 40px 40px;
-            background-image: 
-                linear-gradient(to right, rgba(31, 41, 55, 0.2) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(31, 41, 55, 0.2) 1px, transparent 1px);
+        /* Custom scrollbar to match IDE styles */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
-        .scanline {
-            background: linear-gradient(
-                to bottom,
-                rgba(255,255,255,0),
-                rgba(34, 211, 238, 0.03) 50%,
-                rgba(255,255,255,0)
-            );
-            animation: scan 8s linear infinite;
+        ::-webkit-scrollbar-track {
+            background: #020204;
         }
-        @keyframes scan {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
+        ::-webkit-scrollbar-thumb {
+            background: #1A1D29;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2E3349;
+        }
+        .panel-surface {
+            background-color: #0B0D13;
+        }
+        .line-num-width {
+            min-width: 3rem;
         }
     </style>
 </head>
-<body class="relative overflow-x-hidden min-h-screen selection:bg-cyan-500 selection:text-black">
+<body class="h-screen overflow-hidden text-zinc-300 text-xs flex flex-col selection:bg-purple-500/30 selection:text-purple-200">
 
-    <div class="absolute inset-0 grid-bg pointer-events-none z-0"></div>
-    <div class="fixed inset-0 scanline pointer-events-none z-50"></div>
-
-    <header class="sticky top-0 z-40 w-full border-b border-borderSystem bg-bgMain/80 backdrop-blur-md px-6 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
-        <div class="flex items-center gap-3">
-            <span class="inline-block w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
-            <span class="tracking-widest text-textMain">RM__BACKEND_ENGINE_v2.6</span>
+    <header class="h-12 panel-surface border-b border-zinc-800/80 flex items-center justify-between px-4 shrink-0 select-none">
+        <div class="flex items-center space-x-6 w-1/4">
+            <div class="flex space-x-2">
+                <div class="w-3 h-3 rounded-full bg-red-500/70 border border-red-600/40"></div>
+                <div class="w-3 h-3 rounded-full bg-yellow-500/70 border border-yellow-600/40"></div>
+                <div class="w-3 h-3 rounded-full bg-green-500/70 border border-green-600/40"></div>
+            </div>
+            <div class="flex items-center space-x-2 font-medium tracking-wide">
+                <span class="text-zinc-500">raihamehdi</span>
+                <span class="text-zinc-600">/</span>
+                <span class="text-zinc-200">core-systems-architecture</span>
+                <span class="flex items-center space-x-1.5 px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span>Live Production</span>
+                </span>
+            </div>
         </div>
-        <nav class="hidden md:flex gap-6 uppercase tracking-wider">
-            <a href="#status" class="hover:text-accent transition-colors">/System-Status</a>
-            <a href="#projects" class="hover:text-accent transition-colors">/Core-Systems</a>
-            <a href="#architecture" class="hover:text-accent transition-colors">/Architecture</a>
-            <a href="#contact" class="hover:text-accent transition-colors">/Connect</a>
-        </nav>
-        <div class="text-right hidden sm:block font-mono text-cyan-400/70">
-            LOC_SYS: [31.5204° N, 74.3587° E]
+
+        <div class="flex h-full items-end justify-center w-2/4 space-x-1">
+            <div id="tab-handle-tree" class="px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-colors transition-all duration-150">
+                <span>📁</span> <span>File Tree</span>
+            </div>
+            <div id="tab-handle-git" class="px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]">
+                <span class="text-[#FFB236]">🌿</span> <span>Git History (Active)</span>
+            </div>
+            <div class="px-4 py-2 border-t border-x border-transparent text-zinc-500 cursor-not-allowed opacity-40 flex items-center space-x-1.5">
+                <span>💬</span> <span>PR Review</span> <span class="bg-zinc-800 text-zinc-400 px-1.5 rounded-full text-[10px]">12</span>
+            </div>
+        </div>
+
+        <div class="w-1/4 flex justify-end items-center space-x-4 font-mono">
+            <div class="text-right">
+                <span class="text-emerald-500 font-semibold">+1,420</span> <span class="text-zinc-600">additions</span>
+            </div>
+            <div class="text-right">
+                <span class="text-red-500 font-semibold">-412</span> <span class="text-zinc-600">deletions</span>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-12 space-y-24">
-
-        <section class="min-h-[70vh] flex flex-col justify-center py-8">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-                
-                <!-- Text -->
-                <div class="lg:col-span-7 order-1">
-                    <div class="font-mono text-xs text-accent uppercase tracking-[0.2em] mb-4">
-                        [ Initializing Secure Handshake ... Success ]
-                    </div>
-                    <h1 class="text-4xl sm:text-6xl font-bold text-textMain tracking-tight mb-2">
-                        Hi, I’m <span class="text-transparent bg-clip-text bg-gradient-to-r from-textMain to-accent">Raiha Mehdi</span>
-                    </h1>
-                    <h2 class="text-xl sm:text-2xl font-mono text-textMuted uppercase tracking-wider mb-6">
-                        &lt; Backend Software Engineer /&gt;
-                    </h2>
-                    <p class="text-base sm:text-lg text-textMuted max-w-2xl leading-relaxed mb-8 font-sans">
-                        Building secure FinTech systems, data-driven applications, and AI-powered backend architectures using Python & Django. Focused on data integrity, high-concurrency optimization, and clean architectural design.
-                    </p>
-                    <div class="flex flex-wrap gap-4 font-mono text-xs">
-                        <a href="#projects" class="px-6 py-3 border border-accent text-accent bg-accent/5 hover:bg-accent hover:text-bgMain transition-all duration-200 uppercase tracking-widest flex items-center gap-2">
-                            <i class="fa-solid fa-terminal text-[10px]"></i> View Projects
-                        </a>
-                        <a href="https://github.com/raihamehdi" target="_blank" rel="noopener noreferrer" class="px-6 py-3 border border-borderSystem text-textMain bg-bgCard hover:border-textMuted transition-all duration-200 uppercase tracking-widest flex items-center gap-2">
-                            <i class="fa-brands fa-github text-sm"></i> GitHub
-                        </a>
-                        <a href="#contact" class="px-6 py-3 border border-borderSystem text-textMain bg-bgCard hover:border-textMuted transition-all duration-200 uppercase tracking-widest flex items-center gap-2">
-                            <i class="fa-solid fa-envelope text-[10px]"></i> Contact
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Image -->
-            <div class="lg:col-span-5 order-2 flex justify-center lg:justify-end mt-8 lg:mt-0">
-                    <div class="relative group p-1.5 border border-borderSystem rounded-full bg-bgCard">
-                        <div class="absolute inset-0 rounded-full border-2 border-dashed border-cyan-400/30 group-hover:rotate-45 transition-transform duration-700 pointer-events-none"></div>
-                        
-                        <img src="raiha.png" alt="Raiha Mehdi" class="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 lg:w-80 lg:h-80 rounded-full object-cover grayscale contrast-125 brightness-90 group-hover:grayscale-0 transition-all duration-300 border border-borderSystem">
-                        
-                        <span class="absolute bottom-4 right-4 w-5 h-5 bg-emerald-400 border-4 border-bgMain rounded-full shadow-[0_0_12px_#34d399]"></span>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-
-        <section id="status" class="scroll-mt-20">
-            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-6">
-                <span class="text-accent">&gt;</span> ## System Status
-            </div>
+    <main class="flex-1 flex overflow-hidden w-full">
+        
+        <section class="w-[38%] border-r border-zinc-800/80 panel-surface flex flex-col overflow-hidden relative">
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 font-mono mb-8">
-                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
-                    <span class="text-[10px] text-textMuted uppercase tracking-wider">FinTech Systems</span>
-                    <span class="text-lg font-bold text-emerald-400 flex items-center gap-2 mt-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> ACTIVE
-                    </span>
-                </div>
-                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
-                    <span class="text-[10px] text-textMuted uppercase tracking-wider">Backend Architecture</span>
-                    <span class="text-lg font-bold text-emerald-400 flex items-center gap-2 mt-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> SCALABLE
-                    </span>
-                </div>
-                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
-                    <span class="text-[10px] text-textMuted uppercase tracking-wider">AI Modules</span>
-                    <span class="text-lg font-bold text-cyan-400 flex items-center gap-2 mt-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-cyan-400"></span> OPERATIONAL
-                    </span>
-                </div>
-                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
-                    <span class="text-[10px] text-textMuted uppercase tracking-wider">Data Systems</span>
-                    <span class="text-lg font-bold text-emerald-400 flex items-center gap-2 mt-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> RUNNING
-                    </span>
-                </div>
-                <div class="border border-borderSystem bg-bgCard p-4 flex flex-col justify-between">
-                    <span class="text-[10px] text-textMuted uppercase tracking-wider">Trading Systems</span>
-                    <span class="text-lg font-bold text-amber-400 flex items-center gap-2 mt-2">
-                        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> ANALYTICAL MODE
-                    </span>
-                </div>
-            </div>
-
-            <div class="bg-bgCard border border-borderSystem p-5 rounded-sm max-w-3xl">
-                <p class="text-sm text-textMuted leading-relaxed">
-                    <span class="text-accent font-mono font-bold">INFO:</span> A backend engineer focused on building structured, reliable, and scalable financial technology systems.
-                </p>
-            </div>
-        </section>
-
-
-
-        <section id="projects" class="scroll-mt-20">
-            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
-                <span class="text-accent">&gt;</span> ## Core Project Systems
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
-                        <span>SYS_ID: 01_STRATEGY_ANALYTICS</span>
-                        <span class="px-2 py-0.5 border border-emerald-500/30 text-emerald-400 text-[10px] uppercase bg-emerald-500/5">Production-grade personal system</span>
-                    </div>
-                    <div class="p-6 flex-1 space-y-4">
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
-                            <h3 class="text-lg font-bold text-textMain mt-0.5">Trading Journal & Strategy Analytics System</h3>
-                        </div>
-                        <div>
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
-                            <div class="font-mono text-xs flex flex-wrap gap-2">
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">PostgreSQL</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Bootstrap</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django ORM</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-textMuted leading-relaxed">
-                            A structured trading performance system that converts trading behavior into measurable data-driven insights.
-                        </p>
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
-                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
-                                <li><span class="text-cyan-400/60">■</span> Trade journaling engine</li>
-                                <li><span class="text-cyan-400/60">■</span> Performance analytics dashboard</li>
-                                <li><span class="text-cyan-400/60">■</span> Psychological behavior tracking</li>
-                                <li><span class="text-cyan-400/60">■</span> Strategy evaluation system (SMC-based logic)</li>
-                                <li><span class="text-cyan-400/60">■</span> Session & timeframe breakdown</li>
-                                <li><span class="text-cyan-400/60">■</span> Continuous refinement loop</li>
-                            </ul>
-                        </div>
-                        <div class="pt-2 border-t border-borderSystem/50">
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
-                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
-                                Aggregation-based analytics engine; behavioral data modeling system; modular strategy evaluation architecture configured around Smart Money Concepts (BOS, CHoCH, liquidity zones).
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
-                        <span>SYS_ID: 02_CRYPTO_INTELLIGENCE</span>
-                        <span class="px-2 py-0.5 border border-amber-500/30 text-amber-400 text-[10px] uppercase bg-amber-500/5">Research + production hybrid system</span>
-                    </div>
-                    <div class="p-6 flex-1 space-y-4">
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
-                            <h3 class="text-lg font-bold text-textMain mt-0.5">Crypto Market Intelligence & Pattern Analysis System</h3>
-                        </div>
-                        <div>
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
-                            <div class="font-mono text-xs flex flex-wrap gap-2">
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Pandas</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">CCXT</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Plotly</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-textMuted leading-relaxed">
-                            A system that analyzes crypto market behavior using structured pattern recognition and correlation analysis.
-                        </p>
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
-                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
-                                <li><span class="text-cyan-400/60">■</span> Market pattern classification engine</li>
-                                <li><span class="text-cyan-400/60">■</span> BTC correlation visualizer</li>
-                                <li><span class="text-cyan-400/60">■</span> On-chain behavior analysis</li>
-                                <li><span class="text-cyan-400/60">■</span> Sentiment + technical fusion model</li>
-                                <li><span class="text-cyan-400/60">■</span> 12+ predefined behavior classes</li>
-                                <li><span class="text-cyan-400/60">■</span> Multi-factor asset scoring matrix</li>
-                            </ul>
-                        </div>
-                        <div class="pt-2 border-t border-borderSystem/50">
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
-                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
-                                Multi-layer data processing pipeline; statistical correlation engine; pattern classification system mapping pump-and-dump structures and liquidity traps via rolling timeframes (1H to 1W).
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
-                        <span>SYS_ID: 03_RESTAURANT_REST_API</span>
-                        <span class="px-2 py-0.5 border border-cyan-500/30 text-cyan-400 text-[10px] uppercase bg-cyan-500/5">Production-Ready API System</span>
-                    </div>
-                    <div class="p-6 flex-1 space-y-4">
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
-                            <h3 class="text-lg font-bold text-textMain mt-0.5">High-Performance Restaurant Review System</h3>
-                        </div>
-                        <div>
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
-                            <div class="font-mono text-xs flex flex-wrap gap-2">
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django REST Framework</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Redis</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">NLP Models</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-textMuted leading-relaxed">
-                            A Django REST API-based application enabling optimized restaurant browsing, structural review submissions, and caching analytics processing.
-                        </p>
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
-                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
-                                <li><span class="text-cyan-400/60">■</span> RESTful data retrieval engine</li>
-                                <li><span class="text-cyan-400/60">■</span> In-memory leaderboard caching</li>
-                                <li><span class="text-cyan-400/60">■</span> Automated sentiment classifier</li>
-                                <li><span class="text-cyan-400/60">■</span> High-throughput review pipelines</li>
-                            </ul>
-                        </div>
-                        <div class="pt-2 border-t border-borderSystem/50">
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
-                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
-                                Incorporated NLP-based text models to automatically run sentiment categorization; engineered an in-memory high-speed leaderboard architecture leveraging Redis primitives.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300">
-                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
-                        <span>SYS_ID: 04_SECURE_IOT</span>
-                        <span class="px-2 py-0.5 border border-purple-500/30 text-purple-400 text-[10px] uppercase bg-purple-500/5">Prototype system</span>
-                    </div>
-                    <div class="p-6 flex-1 space-y-4">
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
-                            <h3 class="text-lg font-bold text-textMain mt-0.5">Smart Watt Secure IoT System</h3>
-                        </div>
-                        <div>
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
-                            <div class="font-mono text-xs flex flex-wrap gap-2">
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Machine Learning</span>
-                                <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Stripe / PayPal Gateway</span>
-                            </div>
-                        </div>
-                        <p class="text-sm text-textMuted leading-relaxed">
-                            An intelligent system that detects anomalies in electrical systems and integrates payment APIs for monitoring and control.
-                        </p>
-                        <div>
-                            <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
-                            <ul class="text-xs text-textMuted grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 font-mono">
-                                <li><span class="text-cyan-400/60">■</span> Anomaly detection engine</li>
-                                <li><span class="text-cyan-400/60">■</span> Real-time monitoring system</li>
-                                <li><span class="text-cyan-400/60">■</span> Payment API integration layer</li>
-                                <li><span class="text-cyan-400/60">■</span> Real-time emergency alert dispatch</li>
-                            </ul>
-                        </div>
-                        <div class="pt-2 border-t border-borderSystem/50">
-                            <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
-                            <p class="text-xs font-mono text-textMain/90 leading-relaxed">
-                                Event-driven monitoring logic; ML model layer calculating trend variations against suspicious consumption thresholds; dynamic programmatic billing engine.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-borderSystem bg-bgCard rounded-sm flex flex-col overflow-hidden hover:border-cyan-500/50 transition-all duration-300 lg:col-span-2">
-                    <div class="border-b border-borderSystem bg-bgMain/60 px-4 py-3 font-mono text-xs flex justify-between items-center text-textMuted">
-                        <span>SYS_ID: 05_LAND_MANAGEMENT</span>
-                        <span class="px-2 py-0.5 border border-blue-500/30 text-blue-400 text-[10px] uppercase bg-blue-500/5">Production Ingestion System</span>
-                    </div>
-                    <div class="p-6 flex-1 space-y-4">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="md:col-span-2">
-                                <span class="font-mono text-[10px] text-accent uppercase tracking-wider block">SYSTEM TYPE</span>
-                                <h3 class="text-lg font-bold text-textMain mt-0.5">Secure Land Management & Transaction Ledger</h3>
-                                <p class="text-sm text-textMuted leading-relaxed mt-2">
-                                    A robust web application designed to streamline land registration, execution transactions, buying mechanisms, and multi-parameter plot queries.
-                                </p>
-                            </div>
-                            <div>
-                                <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">STACK</span>
-                                <div class="font-mono text-xs flex flex-wrap gap-2">
-                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Python</span>
-                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">Django</span>
-                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">SQLite / PostgreSQL</span>
-                                    <span class="bg-bgMain px-2 py-1 text-textMain border border-borderSystem">FinTech Integration</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2 border-t border-borderSystem/50">
-                            <div>
-                                <span class="font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">CAPABILITIES</span>
-                                <ul class="text-xs text-textMuted space-y-1 font-mono">
-                                    <li><span class="text-cyan-400/60">■</span> Secure asymmetric profile validation</li>
-                                    <li><span class="text-cyan-400/60">■</span> Hierarchical role-based dashboards</li>
-                                    <li><span class="text-cyan-400/60">■</span> Atomic transaction record processing</li>
-                                    <li><span class="text-cyan-400/60">■</span> Multi-provider integration (Stripe, Easypaisa, JazzCash)</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <span class="font-mono text-[10px] text-textMuted uppercase tracking-wider block mb-1">ENGINEERING HIGHLIGHTS</span>
-                                <p class="text-xs font-mono text-textMain/90 leading-relaxed">
-                                    Enforced bulletproof backend data validation constraints across ACID CRUD boundaries; mapped safe role isolation layers preventing multi-party ledger collision vulnerabilities.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-
-
-        <section id="architecture" class="scroll-mt-20">
-            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
-                <span class="text-accent">&gt;</span> ## System Architecture Thinking
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm font-mono">
-                    <span class="text-[10px] text-textMuted tracking-wider uppercase block mb-4">// DISTRIBUTED DATA FLOW PIPELINE</span>
-                    <div class="flex flex-col gap-2 text-xs">
-                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
-                            Frontend Application Layer
-                        </div>
-                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> HTTP / gRPC</div>
-                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain border-l-2 border-l-cyan-400">
-                            API Gateway / Request Router Layer
-                        </div>
-                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> Validation Pass</div>
-                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
-                            Core Business Logic (Service Layer)
-                        </div>
-                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> ORM / Query</div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMuted">
-                                Data Storage (PostgreSQL)
-                            </div>
-                            <div class="border border-cyan-500/30 bg-cyan-950/20 p-3 rounded text-center text-accent">
-                                Real-Time Analytics Engine
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm font-mono">
-                    <span class="text-[10px] text-textMuted tracking-wider uppercase block mb-4">// ANALYTICAL INGESTION ENGINE PIPELINE</span>
-                    <div class="flex flex-col gap-2 text-xs">
-                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMuted">
-                            Unstructured Market / Broker Input
-                        </div>
-                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> Ingestion Stream</div>
-                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
-                            Strict Schema Validation Engine
-                        </div>
-                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> ACID Transaction Block</div>
-                        <div class="border border-borderSystem bg-bgMain p-3 rounded text-center text-textMain">
-                            Relational Database & Write Ledger
-                        </div>
-                        <div class="text-center text-accent text-sm py-0.5"><i class="fa-solid fa-arrow-down"></i> Async Processing</div>
-                        <div class="border border-cyan-500/40 bg-bgMain p-3 rounded text-center text-accent font-bold">
-                            Insights Dashboard & Metrics Generator
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <section>
-            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
-                <span class="text-accent">&gt;</span> ## Financial Systems Engineering
-            </div>
-            
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div class="space-y-4 font-mono text-xs sm:text-sm">
-                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
-                        <span class="text-textMain font-bold block text-base">Payment Systems</span>
-                        <span class="text-textMuted">Idempotent execution matrices preventing duplicate transaction states across global and localized processing networks including Stripe, PayPal, EasyPaisa, and JazzCash pipelines.</span>
-                    </div>
-                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
-                        <span class="text-textMain font-bold block text-base">Transaction Processing</span>
-                        <span class="text-textMuted">Strict adherence to ACID properties and low isolation-leak designs.</span>
-                    </div>
-                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
-                        <span class="text-textMain font-bold block text-base">Data Consistency Models</span>
-                        <span class="text-textMuted">Deterministic state-machines mapping complex cross-market financial objects.</span>
-                    </div>
-                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
-                        <span class="text-textMain font-bold block text-base">Trading Systems</span>
-                        <span class="text-textMuted">Mathematical execution evaluation frameworks for market logic metrics.</span>
-                    </div>
-                    <div class="border-l-2 border-cyan-400 pl-4 py-1">
-                        <span class="text-textMain font-bold block text-base">Financial Analytics</span>
-                        <span class="text-textMuted">Rolling statistics, multi-factor scoring, and technical sentiment fusion data models.</span>
-                    </div>
+            <div id="pane-git-view" class="w-full h-full flex flex-col">
+                <div class="p-3 border-b border-zinc-800/80 bg-black/20 flex items-center justify-between shrink-0">
+                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Version Stream Ledger</span>
+                    <span class="text-zinc-600 text-[10px]">Select node to update diff engine</span>
                 </div>
                 
-                <div class="border border-borderSystem bg-bgCard p-8 text-center rounded-sm">
-                    <p class="text-lg font-mono text-textMain italic">
-                        "I design backend systems where data integrity, reliability, and precision are critical."
-                    </p>
-                </div>
-            </div>
-        </section>
-
-
-
-        <section>
-            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
-                <span class="text-accent">&gt;</span> ## Engineering Philosophy
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono">
-                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
-                    <div class="text-accent text-lg mb-2">01 //</div>
-                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">Data integrity over UI complexity</div>
-                    <p class="text-xs text-textMuted leading-relaxed">Elegant frontend systems matter less than accurate transactions and flawless database models.</p>
-                </div>
-                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
-                    <div class="text-accent text-lg mb-2">02 //</div>
-                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">System design over quick implementations</div>
-                    <p class="text-xs text-textMuted leading-relaxed">Upfront schematic mapping saves countless development cycles over reactive code alterations.</p>
-                </div>
-                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
-                    <div class="text-accent text-lg mb-2">03 //</div>
-                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">Structured modeling over raw scripts</div>
-                    <p class="text-xs text-textMuted leading-relaxed">Object-oriented representations and design patterns override raw scripts every single time.</p>
-                </div>
-                <div class="border border-borderSystem bg-bgCard p-6 rounded-sm">
-                    <div class="text-accent text-lg mb-2">04 //</div>
-                    <div class="text-textMain font-bold mb-1 uppercase text-xs tracking-wider">Reliability over shortcuts</div>
-                    <p class="text-xs text-textMuted leading-relaxed">Zero performance trade-offs that compromise transactional safety. Shortcuts are technical debt.</p>
-                </div>
-            </div>
-        </section>
-
-
-
-        <section id="contact" class="pb-12 scroll-mt-20">
-            <div class="flex items-center gap-2 font-mono text-sm tracking-widest text-textMuted uppercase mb-8">
-                <span class="text-accent">&gt;</span> ## Terminate Session / Establish Contact
-            </div>
-
-            <div class="border border-borderSystem bg-bgCard p-6 max-w-2xl rounded-sm font-mono text-xs sm:text-sm">
-                <div class="mb-4 text-textMuted">// Run communication interface protocol</div>
-                <div class="space-y-3">
-                    <div class="flex items-center gap-4">
-                        <span class="w-24 text-accent uppercase tracking-wider text-xs">GitHub:</span>
-                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:underline text-textMain break-all">github.com/raihamehdi</a>
+                <div class="flex-1 overflow-y-auto relative p-4 flex">
+                    <div class="absolute top-0 bottom-0 left-6 w-16 pointer-events-none z-0">
+                        <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="16" y1="0" x2="16" y2="100%" stroke="#1A1D29" stroke-width="2"/>
+                            <path d="M 16,50 Q 48,100 48,160 T 16,340" fill="none" stroke="#FFB236" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6"/>
+                            <path d="M 16,230 Q 48,270 48,340 T 16,520" fill="none" stroke="#A855F7" stroke-width="1.5" opacity="0.4"/>
+                        </svg>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <span class="w-24 text-accent uppercase tracking-wider text-xs">LinkedIn:</span>
-                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:underline text-textMain break-all">linkedin.com/in/raiha-mehdi-423916243</a>
-                    </div>
-                    <div class="flex items-center gap-4">
-                        <span class="w-24 text-accent uppercase tracking-wider text-xs">Email:</span>
-                        <a href="mailto:abdemehdi49@gmail.com" class="hover:underline text-textMain break-all">abdemehdi49@gmail.com</a>
+                    <div id="commit-container" class="w-full space-y-4 relative z-10 pl-8">
+                        </div>
+                </div>
+            </div>
+
+            <div id="pane-tree-view" class="w-full h-full flex flex-col hidden">
+                <div class="p-3 border-b border-zinc-800/80 bg-black/20 flex items-center justify-between shrink-0">
+                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Repository Repository Tree</span>
+                    <span class="text-zinc-600 text-[10px]">Click any file module to deploy view</span>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 font-mono space-y-2 text-zinc-400">
+                    <div class="text-zinc-500 select-none font-bold text-[11px] mb-2">📁 core-systems-architecture (main)</div>
+                    
+                    <div class="pl-3 border-l border-zinc-800 space-y-1">
+                        <div class="text-zinc-500 font-bold select-none">📁 trading/</div>
+                        <div onclick="routeFileSelect('commit-1')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                            <span>📄 analytics_engine.py</span>
+                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">feat(analytics)</span>
+                        </div>
+                        
+                        <div class="text-zinc-500 font-bold select-none pt-2">📁 crypto/</div>
+                        <div onclick="routeFileSelect('commit-2')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                            <span>📄 intelligence_pipeline.py</span>
+                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">feat(intel)</span>
+                        </div>
+
+                        <div class="text-zinc-500 font-bold select-none pt-2">📁 core/</div>
+                        <div onclick="routeFileSelect('commit-3')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                            <span>📄 restaurant_api.py</span>
+                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">perf(api)</span>
+                        </div>
+
+                        <div class="text-zinc-500 font-bold select-none pt-2">📁 gateway/</div>
+                        <div onclick="routeFileSelect('commit-4')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                            <span>📄 smart_watt_secure.py</span>
+                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">feat(iot)</span>
+                        </div>
+
+                        <div class="text-zinc-500 font-bold select-none pt-2">📁 ledger/</div>
+                        <div onclick="routeFileSelect('commit-5')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                            <span>📄 land_registry.py</span>
+                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">sec(ledger)</span>
+                        </div>
+
+                        <div class="text-zinc-500 font-bold select-none pt-2">📁 config/</div>
+                        <div onclick="routeFileSelect('commit-6')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                            <span>📄 paradigms.json</span>
+                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">v1.0.0</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <section class="w-[62%] flex flex-col bg-[#020204] overflow-hidden">
+            <div class="h-10 border-b border-zinc-800/80 panel-surface px-4 flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-3">
+                    <span class="text-zinc-400 font-medium">Showing changes for:</span>
+                    <span id="diff-file-path" class="text-[#FFB236] bg-amber-950/20 px-2 py-0.5 border border-amber-900/30 rounded font-mono">---</span>
+                </div>
+                <div id="diff-stats-pill" class="font-mono text-[11px]">
+                    </div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto font-mono text-[13px] leading-relaxed relative">
+                <div class="w-full border-b border-zinc-900 bg-zinc-950/40 px-4 py-2 text-red-400 select-none text-[11px] uppercase font-bold tracking-wider">
+                    ⚠️ THE PROBLEM STATEMENT & LEGACY ARCHITECTURE CONSTRAINTS
+                </div>
+                <div id="diff-red-container" class="w-full">
+                    </div>
+
+                <div class="w-full border-y border-zinc-900 bg-zinc-950/40 px-4 py-2 text-emerald-400 select-none text-[11px] uppercase font-bold tracking-wider mt-2">
+                    🚀 CASE STUDY: SYSTEM APPROACH & TECH STACK JUSTIFICATION
+                </div>
+                <div id="diff-green-container" class="w-full">
+                    </div>
+            </div>
+
+            <footer class="panel-surface border-t border-zinc-800/80 flex flex-col shrink-0">
+                <div class="h-8 bg-black/40 px-4 flex items-center justify-between border-b border-zinc-900/60 select-none">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-purple-400 font-bold">⌨</span>
+                        <span class="font-bold uppercase tracking-wider text-[10px] text-zinc-400">Terminal Shell Session</span>
+                        <span class="text-zinc-600 font-mono text-[10px]"> (bash - raihamehdi@production:~ )</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                        <span class="text-[10px] text-zinc-500 font-mono">tty connected</span>
+                    </div>
+                </div>
+                <div class="p-4 bg-[#05060a] font-mono text-zinc-400 space-y-2 selection:bg-amber-500/20 selection:text-amber-300">
+                    <div class="flex items-center space-x-2">
+                        <span class="text-emerald-500">raihamehdi@production:~$</span>
+                        <span class="text-zinc-100 font-medium">curl -s https://api.raihamehdi.dev/contact</span>
+                    </div>
+                    <div class="pl-4 border-l-2 border-zinc-800/80 my-2 space-y-1.5 text-[11px]">
+                        <div class="text-zinc-500">✓ Parsing live architecture communication channels:</div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-zinc-500 w-20 inline-block">→ GitHub:</span>
+                            <a href="https://github.com/raihamehdi" target="_blank" class="text-[#FFB236] hover:underline hover:text-amber-400 transition-colors">github.com/raihamehdi</a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-zinc-500 w-20 inline-block">→ LinkedIn:</span>
+                            <a href="https://linkedin.com/in/raiha-mehdi-423916243" target="_blank" class="text-purple-400 hover:underline hover:text-purple-300 transition-colors">linkedin.com/in/raiha-mehdi-423916243</a>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <span class="text-zinc-500 w-20 inline-block">→ Email:</span>
+                            <a href="mailto:abdemehdi49@gmail.com" class="text-emerald-400 hover:underline hover:text-emerald-300 transition-colors">abdemehdi49@gmail.com</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </section>
     </main>
 
-    <footer class="border-t border-borderSystem bg-bgCard/40 py-6 text-center font-mono text-[10px] text-textMuted">
-        <p>© 2026 Raiha Mehdi. All Rights Reserved. System status: stable. Encryption active.</p>
-    </footer>
+    <script>
+        const COMMIT_MATRIX = [
+            {
+                id: "commit-1",
+                hash: "e4b19a",
+                timestamp: "2026.06",
+                tag: "feat(analytics)",
+                tagType: "feature",
+                message: "Engineered clean data normalization constraints using Django ORM.",
+                file: "trading/analytics_engine.py",
+                additions: 34,
+                deletions: 12,
+                redBlock: [
+                    "# [PROBLEM STATEMENT]",
+                    "# - Manual trading metrics were being tracked via fragile, asynchronous spreadsheets.",
+                    "# - High human error rates led to corrupted trade tracking records and bad lookups.",
+                    "# - Zero structural awareness for algorithmic trading metrics like liquidity sweeps, BOS, or CHoCH.",
+                    "# - Critical database constraints were bypassed, creating dirty data blocks.",
+                    "",
+                    "def legacy_process_market_logs(raw_data):",
+                    "    for row in raw_data.get('rows', []):",
+                    "        save_to_csv_fallback(row[0], row[1], row[2]) # Fragmented execution loop"
+                ],
+                greenBlock: [
+                    "# [THE APPROACH]",
+                    "# We introduced concrete normalization contracts at the transactional API entry-point.",
+                    "# Mapped financial mechanics directly to relational entities with atomic isolation scopes.",
+                    "",
+                    "# [WHY THE TECH STACK?]",
+                    "# - Django ORM: Utilized to enforce absolute state preservation, transactions, and robust schema validation.",
+                    "# - Django REST Serializers: Sanitizes raw payloads instantly, ensuring zero bad data reaches the execution stream.",
+                    "",
+                    "def process_market_logs(raw_data):",
+                    "    with transaction.atomic():",
+                    "        validated_payload = AnalyticsPayloadSerializer(data=raw_data)",
+                    "        if validated_payload.is_valid(raise_exception=True):",
+                    "            market_session = MarketSession.objects.create(",
+                    "                structure_type=validated_payload.validated_data['market_structure'],",
+                    "                liquidity_sweep=validated_payload.validated_data['sweep_detected'],",
+                    "                choch_block=validated_payload.validated_data['choch_validation']",
+                    "            )",
+                    "            return MarketSessionMetricsEngine.compute(market_session)"
+                ]
+            },
+            {
+                id: "commit-2",
+                hash: "3c2d11",
+                timestamp: "2026.05",
+                tag: "feat(intel)",
+                tagType: "feature",
+                message: "Utilized a rolling window computation approach over complex exchange datasets.",
+                file: "crypto/intelligence_pipeline.py",
+                additions: 42,
+                deletions: 15,
+                redBlock: [
+                    "# [PROBLEM STATEMENT]",
+                    "# - Single-threaded fetching of volatile cryptocurrency exchange prices introduced severe latency lag.",
+                    "# - Complete lack of historical context and real-time correlation indexes during sharp trend movements.",
+                    "# - Market data was volatile and unindexed, blinding automated execution models.",
+                    "",
+                    "def sync_prices(self):",
+                    "    data = self.exchange.fetch_ticker('BTC/USDT')",
+                    "    self.db.save(data['last']) # Blocking thread operation"
+                ],
+                greenBlock: [
+                    "# [THE APPROACH]",
+                    "# Re-architected data ingesting to run fully asynchronously. Instead of processing standalone snapshots,",
+                    "# we stream batch OHLCV data into dynamic timeframes and run matrix calculation windows on live memory.",
+                    "",
+                    "# [WHY THE TECH STACK?]",
+                    "# - Pandas: Unrivaled multi-dimensional rolling array math computations optimized for streaming vectors.",
+                    "# - CCXT Pro API: Asynchronous network client bindings to prevent I/O blocking during large multi-exchange sweeps.",
+                    "",
+                    "async def sync_prices_rolling_window(self):",
+                    "    exchange_frames = await self.async_ccxt_client.fetch_ohlcv_batch(self.target_symbols, intervals=['1h', '4h', '1d', '1w'])",
+                    "    df = pd.DataFrame(exchange_frames, columns=['ts', 'open', 'high', 'low', 'close', 'volume'])",
+                    "    df['rolling_correlation'] = df['close'].rolling(window=24).corr(self.on_chain_sentiment_index)",
+                    "    await self.broadcast_pipeline_metrics(df.to_dict(orient='records'))"
+                ]
+            },
+            {
+                id: "commit-3",
+                hash: "8b9f02",
+                timestamp: "2026.04",
+                tag: "perf(api)",
+                tagType: "performance",
+                message: "Architected throttled, request-limited infrastructure pipelines with precise serialization optimization.",
+                file: "core/restaurant_api.py",
+                additions: 48,
+                deletions: 18,
+                redBlock: [
+                    "# [PROBLEM STATEMENT]",
+                    "# - Heavy serialization layers caused massive API bottlenecks under high-concurrency requests.",
+                    "# - Suboptimal nested database queries created classic 'N+1 lookups', leaking memory,",
+                    "#   and driving multi-second response delays during heavy traffic.",
+                    "",
+                    "def get_leaderboards(request):",
+                    "    data = Restaurant.objects.all().order_by('-score')",
+                    "    return Response(DeepNestedSerializer(data, many=True).data) # Memory Leak Vector"
+                ],
+                greenBlock: [
+                    "# [THE APPROACH]",
+                    "# Built a strict write-through caching layer. Flattened the API data transfer objects (DTO), implemented",
+                    "# rate-limiting thresholds directly onto public routes, and decoupled core database hits via an in-memory data cache.",
+                    "",
+                    "# [WHY THE TECH STACK?]",
+                    "# - Redis Cluster: Chosen for ultra-low sub-millisecond retrieval speeds for highly transient user leaderboards.",
+                    "# - Django REST Framework Throttling: Keeps bad actors or scraper spikes from consuming system resources.",
+                    "",
+                    "@throttle_classes([HighConcurrencyAnonRateThrottle])",
+                    "def get_leaderboards_optimized(request):",
+                    "    cached_leaderboard = redis_cluster.get(\"leaderboard:v1:prime\")",
+                    "    if cached_leaderboard:",
+                    "        return Response(json.loads(cached_leaderboard), status=status.HTTP_200_OK)",
+                    "    ",
+                    "    optimized_dataset = Restaurant.objects.only('id', 'slug', 'score').filter(is_active=True)[:100]",
+                    "    serialized_payload = FlatLeaderboardPrimitiveSerializer(optimized_dataset, many=True).data",
+                    "    redis_cluster.setex(\"leaderboard:v1:prime\", 60, json.dumps(serialized_payload))",
+                    "    return Response(serialized_payload)"
+                ]
+            },
+            {
+                id: "commit-4",
+                hash: "5a1c89",
+                timestamp: "2026.03",
+                tag: "feat(iot)",
+                tagType: "feature",
+                message: "Bridges hardware telemetries with a secure online control ledger.",
+                file: "gateway/smart_watt_secure.py",
+                additions: 39,
+                deletions: 14,
+                redBlock: [
+                    "# [PROBLEM STATEMENT]",
+                    "# - Incoming hardware device data streams lacked validation, leaving nodes open to spoofing attacks.",
+                    "# - Brittle, manual recurring billing routines failed silently, dropping connection cycles and",
+                    "#   corrupting subscription runtime ledgers.",
+                    "",
+                    "def handle_hardware_consumption(device_payload):",
+                    "    process_raw_bill_math(device_payload['watts']) # Untrusted telemetry source injection"
+                ],
+                greenBlock: [
+                    "# [THE APPROACH]",
+                    "# Enforced an asymmetric signature layer inside the hardware telemetry processing pipe.",
+                    "# Created an internal guard module that filters anomalous consumption bursts and handles payments via",
+                    "# strict cryptographic idempotency keys to ensure users are never multi-charged.",
+                    "",
+                    "# [WHY THE TECH STACK?]",
+                    "# - Asymmetric Cryptography: Cryptographic hardware verification ensures complete device authentication.",
+                    "# - Stripe / PayPal API: Native support for metadata tracking, automated multi-tier retry webhooks, and secure vaults.",
+                    "",
+                    "def handle_hardware_consumption_secure(device_payload):",
+                    "    if not AsymmetricCryptoEngine.verify_signature(device_payload['signature'], device_payload['publicKey']):",
+                    "        raise SecurityAssertionException(\"Hardware telemetry frame signature mismatch.\")",
+                    "    ",
+                    "    anomaly_detected = TelemetryGuard.inspect_variance(device_payload['dataset'])",
+                    "    if not anomaly_detected:",
+                    "        LedgerBillingCoordinator.trigger_idempotent_charge(",
+                    "            idempotency_key=device_payload['nonce'],",
+                    "            provider_gateways=['stripe', 'paypal'],",
+                    "            consumption_units=device_payload['watts']",
+                    "        )"
+                ]
+            },
+            {
+                id: "commit-5",
+                hash: "9d4f23",
+                timestamp: "2026.02",
+                tag: "sec(ledger)",
+                tagType: "security",
+                message: "Protected critical database integrity layers via strict asymmetric safety isolation.",
+                file: "ledger/land_registry.py",
+                additions: 31,
+                deletions: 11,
+                redBlock: [
+                    "# [PROBLEM STATEMENT]",
+                    "# - Public municipal ledger data transfers were vulnerable to data race conditions and duplicate overrides.",
+                    "# - Raw SQL concatenation allowed unauthorized users to escalate privileges and hijack property files.",
+                    "",
+                    "def execute_registry_transfer(property_id, owner_context):",
+                    "    db.query(f\"UPDATE registry SET owner = '{owner_context}' WHERE id = {property_id}\") # SQL Injection Vector"
+                ],
+                greenBlock: [
+                    "# [THE APPROACH]",
+                    "# Enforced a thread-isolated serialization model, blocking race conditions entirely during state switches.",
+                    "# All queries were parameterized via strong models, backed by an immutable Role-Based Access Control matrix.",
+                    "",
+                    "# [WHY THE TECH STACK?]",
+                    "# - Serializable Database Transaction Isolation: Eradicates all dirty/phantom read vulnerabilities completely.",
+                    "# - Hash-Linked RBAC Engine: Protects municipal entities from horizontal or vertical permission manipulation.",
+                    "",
+                    "def execute_registry_transfer_isolated(property_id, owner_context):",
+                    "    ensure_thread_isolation_lock(property_id)",
+                    "    with db.transaction_context(isolation_level=\"SERIALIZABLE\"):",
+                    "        acl_assertion = AccessControlRoleMatrix.evaluate(owner_context.roles, permission=\"ASSET_TRANSFER\")",
+                    "        if acl_assertion.is_authorized:",
+                    "            RegistryLedgerNode.objects.filter(id=property_id).update(owner_record=owner_context.signature_hash)"
+                ]
+            },
+            {
+                id: "commit-6",
+                hash: "v1.0.0",
+                timestamp: "2026.01",
+                tag: "release(core)",
+                tagType: "release",
+                message: "Baseline Core Architecture Specification and Production Paradigm Framework JSON Definition.",
+                file: "config/paradigms.json",
+                additions: 25,
+                deletions: 2,
+                redBlock: [
+                    "// [PROBLEM STATEMENT]",
+                    "// - System lacks foundational rules, engineering guidelines, or concrete quality standards.",
+                    "// - Results in ad-hoc hacky engineering decisions, scaling technical debt blocks exponentially.",
+                    "{}"
+                ],
+                greenBlock: [
+                    "// [THE SYSTEM PARADIGM APPROACH]",
+                    "// Declared an explicit, version-controlled operational blueprint file defining core development philosophies.",
+                    "// This file serves as the strict baseline ruleset for all engineers contributing to this system repository.",
+                    "{",
+                    "  \"architecture_baseline\": \"v1.0.0\",",
+                    "  \"production_paradigms\": {",
+                    "    \"01_data_integrity\": \"Flawless transactional schemas over superficial structural formatting.\",",
+                    "    \"02_schematic_design\": \"Detailed structural boundary planning to reduce codebase clutter.\",",
+                    "    \"03_object_representation\": \"Explicit relational abstractions over raw, fragile parsing scripts.\",",
+                    "    \"04_zero_debt\": \"Rejecting fast shortcuts to prevent deliberate technical debt vectors.\"",
+                    "  }",
+                    "}"
+                ]
+            }
+        ];
 
+        // NAVIGATION TAB ARCHITECTURE SWITCH CONTROLLERS
+        const tabTree = document.getElementById('tab-handle-tree');
+        const tabGit = document.getElementById('tab-handle-git');
+        const paneTree = document.getElementById('pane-tree-view');
+        const paneGit = document.getElementById('pane-git-view');
+
+        function switchTabTo(target) {
+            if (target === 'tree') {
+                tabTree.className = "px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]";
+                tabGit.className = "px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-colors";
+                paneTree.classList.remove('hidden');
+                paneGit.classList.add('hidden');
+            } else {
+                tabGit.className = "px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]";
+                tabTree.className = "px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-colors";
+                paneGit.classList.remove('hidden');
+                paneTree.classList.add('hidden');
+            }
+        }
+
+        tabTree.addEventListener('click', () => switchTabTo('tree'));
+        tabGit.addEventListener('click', () => switchTabTo('git'));
+
+        // ROUTE SELECTOR LINK FROM FILE SYSTEM EXPLORER
+        function routeFileSelect(commitId) {
+            switchTabTo('git');
+            activateCommitNode(commitId);
+        }
+
+        // RENDER LEAF NODES FUNCTION
+        function buildCommitGraphList() {
+            const container = document.getElementById('commit-container');
+            container.innerHTML = '';
+
+            COMMIT_MATRIX.forEach((commit, idx) => {
+                const nodeButton = document.createElement('button');
+                nodeButton.id = commit.id;
+                nodeButton.className = `w-full text-left p-3 rounded-lg border transition-all duration-200 block relative cursor-pointer group ${
+                    idx === 0 
+                    ? 'bg-[#1A1D29]/70 border-zinc-700/80 shadow-md shadow-black/40 ring-1 ring-amber-500/20' 
+                    : 'bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800'
+                }`;
+
+                let tagColorStyle = "bg-purple-950/50 text-purple-400 border-purple-800/40";
+                if(commit.tagType === 'performance') tagColorStyle = "bg-sky-950/50 text-sky-400 border-sky-800/40";
+                if(commit.tagType === 'security') tagColorStyle = "bg-red-950/50 text-red-400 border-red-800/40";
+                if(commit.tagType === 'release') tagColorStyle = "bg-amber-950/50 text-[#FFB236] border-amber-800/40";
+
+                nodeButton.innerHTML = `
+                    <div class="flex items-center justify-between mb-1.5 font-mono text-[10px]">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-zinc-500 font-bold group-hover:text-zinc-300 transition-colors">${commit.hash}</span>
+                            <span class="px-2 py-0.5 border text-[9px] font-semibold rounded ${tagColorStyle}">${commit.tag}</span>
+                        </div>
+                        <span class="text-zinc-600 font-medium">${commit.timestamp}</span>
+                    </div>
+                    <p class="text-zinc-300 font-sans tracking-wide text-xs line-clamp-2 leading-snug group-hover:text-zinc-100 transition-colors">${commit.message}</p>
+                `;
+
+                nodeButton.addEventListener('click', () => {
+                    activateCommitNode(commit.id);
+                });
+
+                container.appendChild(nodeButton);
+            });
+        }
+
+        // INTERACTIVE ENGINE CORE SWITCH ENGINE 
+        function activateCommitNode(targetId) {
+            COMMIT_MATRIX.forEach(commit => {
+                const element = document.getElementById(commit.id);
+                if (element) {
+                    if (commit.id === targetId) {
+                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-200 block relative cursor-pointer group bg-[#1A1D29]/70 border-zinc-700/80 shadow-md shadow-black/40 ring-1 ring-amber-500/20";
+                    } else {
+                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-200 block relative cursor-pointer group bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800";
+                    }
+                }
+            });
+
+            const currentPayload = COMMIT_MATRIX.find(c => c.id === targetId);
+            if (!currentPayload) return;
+
+            document.getElementById('diff-file-path').innerText = `📄 ${currentPayload.file}`;
+            document.getElementById('diff-stats-pill').innerHTML = `
+                <span class="text-emerald-400 font-medium">+${currentPayload.additions} additions</span> 
+                <span class="text-zinc-600 px-1">|</span> 
+                <span class="text-red-400 font-medium">-${currentPayload.deletions} deletions</span>
+            `;
+
+            // Populate Red Legacy Diff Panel Blocks
+            const redContainer = document.getElementById('diff-red-container');
+            redContainer.innerHTML = '';
+            currentPayload.redBlock.forEach((line, index) => {
+                const lineRow = document.createElement('div');
+                lineRow.className = "flex w-full bg-red-950/15 border-l-2 border-red-500/80 text-red-200/90 hover:bg-red-950/25 transition-colors py-0.5";
+                lineRow.innerHTML = `
+                    <div class="line-num-width text-right pr-4 select-none text-red-800/80 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
+                    <div class="line-num-width text-center select-none text-red-700/80 text-[10px] font-mono pr-2">-</div>
+                    <div class="pl-4 whitespace-pre font-mono tracking-wide overflow-x-auto">${escapeHtml(line)}</div>
+                `;
+                redContainer.appendChild(lineRow);
+            });
+
+            // Populate Green Solution Diff Panel Blocks
+            const greenContainer = document.getElementById('diff-green-container');
+            greenContainer.innerHTML = '';
+            currentPayload.greenBlock.forEach((line, index) => {
+                const lineRow = document.createElement('div');
+                lineRow.className = "flex w-full bg-emerald-950/15 border-l-2 border-emerald-500/80 text-emerald-100 hover:bg-emerald-950/25 transition-colors py-0.5";
+                lineRow.innerHTML = `
+                    <div class="line-num-width text-right pr-4 select-none text-emerald-800/80 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
+                    <div class="line-num-width text-center select-none text-emerald-700/80 text-[10px] font-mono pr-2">+</div>
+                    <div class="pl-4 whitespace-pre font-mono tracking-wide overflow-x-auto">${escapeHtml(line)}</div>
+                `;
+                greenContainer.appendChild(lineRow);
+            });
+        }
+
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            buildCommitGraphList();
+            activateCommitNode('commit-1');
+        });
+    </script>
 </body>
 </html>
