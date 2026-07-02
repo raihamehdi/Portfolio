@@ -7,8 +7,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230B0D13'/%3E%3Cpath d='M30 30 L55 50 L30 70 M60 70 L80 70' stroke='%23FFB236' stroke-width='10' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'JetBrains Mono', monospace;
@@ -18,201 +18,207 @@
         }
         /* Custom scrollbar to match IDE styles */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 4px;
+            height: 4px;
         }
         ::-webkit-scrollbar-track {
             background: #020204;
         }
         ::-webkit-scrollbar-thumb {
             background: #1A1D29;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2E3349;
+            border-radius: 2px;
         }
         .panel-surface {
             background-color: #0B0D13;
         }
         .line-num-width {
-            min-width: 3rem;
+            min-width: 2.2rem;
         }
     </style>
 </head>
 <body class="h-screen overflow-hidden text-zinc-300 text-xs flex flex-col selection:bg-purple-500/30 selection:text-purple-200">
 
-    <header class="h-12 panel-surface border-b border-zinc-800/80 flex items-center justify-between px-4 shrink-0 select-none">
-        <div class="flex items-center space-x-6 w-1/4">
-            <div class="flex space-x-2">
+    <header class="h-14 md:h-12 panel-surface border-b border-zinc-800/80 flex flex-col md:flex-row items-center justify-between px-3 md:px-4 shrink-0 select-none justify-center gap-1 md:gap-0">
+        <div class="flex items-center justify-between md:justify-start w-full md:w-1/4">
+            <div class="hidden md:flex space-x-2 mr-6">
                 <div class="w-3 h-3 rounded-full bg-red-500/70 border border-red-600/40"></div>
                 <div class="w-3 h-3 rounded-full bg-yellow-500/70 border border-yellow-600/40"></div>
                 <div class="w-3 h-3 rounded-full bg-green-500/70 border border-green-600/40"></div>
             </div>
-            <div class="flex items-center space-x-2 font-medium tracking-wide">
+            <div class="flex items-center space-x-2 font-medium tracking-wide text-[11px] md:text-xs">
                 <span class="text-zinc-500">raihamehdi</span>
                 <span class="text-zinc-600">/</span>
-                <span class="text-zinc-200">core-systems-architecture</span>
-                <span class="flex items-center space-x-1.5 px-2 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span>Live Production</span>
+                <span class="text-zinc-200 truncate max-w-[140px] md:max-w-none">core-systems</span>
+                <span class="flex items-center space-x-1 px-1.5 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[9px] text-emerald-400 font-semibold uppercase tracking-wider">
+                    <span class="w-1 h-1 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="hidden xs:inline">Live</span>
                 </span>
+            </div>
+            <div class="flex items-center space-x-2 font-mono text-[10px] md:hidden">
+                <span class="text-emerald-500 font-bold">+1.4k</span>
+                <span class="text-red-500 font-bold">-412</span>
             </div>
         </div>
 
-        <div class="flex h-full items-end justify-center w-2/4 space-x-1">
-            <div id="tab-handle-tree" class="px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-colors transition-all duration-150">
+        <div class="hidden md:flex h-full items-end justify-center w-2/4 space-x-1">
+            <div id="tab-handle-tree" class="px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-all">
                 <span>📁</span> <span>File Tree</span>
             </div>
             <div id="tab-handle-git" class="px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]">
-                <span class="text-[#FFB236]">🌿</span> <span>Git History (Active)</span>
+                <span class="text-[#FFB236]">🌿</span> <span>Git History</span>
             </div>
-            <div class="px-4 py-2 border-t border-x border-transparent text-zinc-500 cursor-not-allowed opacity-40 flex items-center space-x-1.5">
-                <span>💬</span> <span>PR Review</span> <span class="bg-zinc-800 text-zinc-400 px-1.5 rounded-full text-[10px]">12</span>
+            <div id="tab-handle-diff" class="px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-all">
+                <span>🔍</span> <span>Active Diff</span>
             </div>
         </div>
 
-        <div class="w-1/4 flex justify-end items-center space-x-4 font-mono">
-            <div class="text-right">
-                <span class="text-emerald-500 font-semibold">+1,420</span> <span class="text-zinc-600">additions</span>
-            </div>
-            <div class="text-right">
-                <span class="text-red-500 font-semibold">-412</span> <span class="text-zinc-600">deletions</span>
-            </div>
+        <div class="hidden md:flex w-1/4 justify-end items-center space-x-4 font-mono">
+            <div class="text-right"><span class="text-emerald-500 font-semibold">+1,420</span> <span class="text-zinc-600">additions</span></div>
+            <div class="text-right"><span class="text-red-500 font-semibold">-412</span> <span class="text-zinc-600">deletions</span></div>
         </div>
     </header>
 
-    <main class="flex-1 flex overflow-hidden w-full">
+    <main class="flex-1 flex overflow-hidden w-full relative">
         
-        <section class="w-[38%] border-r border-zinc-800/80 panel-surface flex flex-col overflow-hidden relative">
+        <section id="left-workspace-pane" class="w-full md:w-[38%] border-r border-zinc-800/80 panel-surface flex flex-col overflow-hidden relative shrink-0">
             
             <div id="pane-git-view" class="w-full h-full flex flex-col">
                 <div class="p-3 border-b border-zinc-800/80 bg-black/20 flex items-center justify-between shrink-0">
                     <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Version Stream Ledger</span>
-                    <span class="text-zinc-600 text-[10px]">Select node to update diff engine</span>
+                    <span class="text-zinc-600 text-[10px] hidden xs:inline">Select a node to view structural changes</span>
                 </div>
                 
-                <div class="flex-1 overflow-y-auto relative p-4 flex">
-                    <div class="absolute top-0 bottom-0 left-6 w-16 pointer-events-none z-0">
+                <div class="flex-1 overflow-y-auto relative p-3 md:p-4 flex">
+                    <div class="absolute top-0 bottom-0 left-5 w-16 pointer-events-none z-0">
                         <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                             <line x1="16" y1="0" x2="16" y2="100%" stroke="#1A1D29" stroke-width="2"/>
-                            <path d="M 16,50 Q 48,100 48,160 T 16,340" fill="none" stroke="#FFB236" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.6"/>
-                            <path d="M 16,230 Q 48,270 48,340 T 16,520" fill="none" stroke="#A855F7" stroke-width="1.5" opacity="0.4"/>
+                            <path d="M 16,50 Q 48,100 48,160 T 16,340" fill="none" stroke="#FFB236" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4"/>
                         </svg>
                     </div>
-                    <div id="commit-container" class="w-full space-y-4 relative z-10 pl-8">
+                    <div id="commit-container" class="w-full space-y-3 relative z-10 pl-7">
                         </div>
                 </div>
             </div>
 
             <div id="pane-tree-view" class="w-full h-full flex flex-col hidden">
                 <div class="p-3 border-b border-zinc-800/80 bg-black/20 flex items-center justify-between shrink-0">
-                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Repository Repository Tree</span>
-                    <span class="text-zinc-600 text-[10px]">Click any file module to deploy view</span>
+                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Repository Module Hierarchy</span>
                 </div>
-                <div class="flex-1 overflow-y-auto p-4 font-mono space-y-2 text-zinc-400">
-                    <div class="text-zinc-500 select-none font-bold text-[11px] mb-2">📁 core-systems-architecture (main)</div>
-                    
-                    <div class="pl-3 border-l border-zinc-800 space-y-1">
+                <div class="flex-1 overflow-y-auto p-4 font-mono space-y-2 text-zinc-400 text-[11px]">
+                    <div class="text-zinc-500 font-bold mb-2">📁 core-systems-architecture</div>
+                    <div class="pl-3 border-l border-zinc-800 space-y-2">
                         <div class="text-zinc-500 font-bold select-none">📁 trading/</div>
-                        <div onclick="routeFileSelect('commit-1')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                        <div onclick="routeFileSelect('commit-1')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
                             <span>📄 analytics_engine.py</span>
-                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">feat(analytics)</span>
+                            <span class="text-[9px] text-[#FFB236] bg-amber-950/40 px-1 border border-amber-900/30 rounded">feat</span>
                         </div>
                         
-                        <div class="text-zinc-500 font-bold select-none pt-2">📁 crypto/</div>
-                        <div onclick="routeFileSelect('commit-2')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                        <div class="text-zinc-500 font-bold select-none pt-1">📁 crypto/</div>
+                        <div onclick="routeFileSelect('commit-2')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
                             <span>📄 intelligence_pipeline.py</span>
-                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">feat(intel)</span>
+                            <span class="text-[9px] text-[#FFB236] bg-amber-950/40 px-1 border border-amber-900/30 rounded">feat</span>
                         </div>
 
-                        <div class="text-zinc-500 font-bold select-none pt-2">📁 core/</div>
-                        <div onclick="routeFileSelect('commit-3')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                        <div class="text-zinc-500 font-bold select-none pt-1">📁 core/</div>
+                        <div onclick="routeFileSelect('commit-3')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
                             <span>📄 restaurant_api.py</span>
-                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">perf(api)</span>
+                            <span class="text-[9px] text-sky-400 bg-sky-950/40 px-1 border border-sky-900/30 rounded">perf</span>
                         </div>
 
-                        <div class="text-zinc-500 font-bold select-none pt-2">📁 gateway/</div>
-                        <div onclick="routeFileSelect('commit-4')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                        <div class="text-zinc-500 font-bold select-none pt-1">📁 gateway/</div>
+                        <div onclick="routeFileSelect('commit-4')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
                             <span>📄 smart_watt_secure.py</span>
-                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">feat(iot)</span>
+                            <span class="text-[9px] text-[#FFB236] bg-amber-950/40 px-1 border border-amber-900/30 rounded">feat</span>
                         </div>
 
-                        <div class="text-zinc-500 font-bold select-none pt-2">📁 ledger/</div>
-                        <div onclick="routeFileSelect('commit-5')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                        <div class="text-zinc-500 font-bold select-none pt-1">📁 ledger/</div>
+                        <div onclick="routeFileSelect('commit-5')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
                             <span>📄 land_registry.py</span>
-                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">sec(ledger)</span>
+                            <span class="text-[9px] text-red-400 bg-red-950/40 px-1 border border-red-900/30 rounded">sec</span>
                         </div>
 
-                        <div class="text-zinc-500 font-bold select-none pt-2">📁 config/</div>
-                        <div onclick="routeFileSelect('commit-6')" class="pl-4 py-1 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group transition-colors">
+                        <div class="text-zinc-500 font-bold select-none pt-1">📁 config/</div>
+                        <div onclick="routeFileSelect('commit-6')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
                             <span>📄 paradigms.json</span>
-                            <span class="text-[10px] text-zinc-600 group-hover:text-[#FFB236]">v1.0.0</span>
+                            <span class="text-[9px] text-zinc-400 bg-zinc-950/40 px-1 border border-zinc-800/30 rounded">v1.0.0</span>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="w-[62%] flex flex-col bg-[#020204] overflow-hidden">
-            <div class="h-10 border-b border-zinc-800/80 panel-surface px-4 flex items-center justify-between shrink-0">
-                <div class="flex items-center space-x-3">
-                    <span class="text-zinc-400 font-medium">Showing changes for:</span>
-                    <span id="diff-file-path" class="text-[#FFB236] bg-amber-950/20 px-2 py-0.5 border border-amber-900/30 rounded font-mono">---</span>
+        <section id="right-workspace-pane" class="w-full md:w-[62%] flex flex-col bg-[#020204] overflow-hidden absolute md:relative inset-0 translate-x-full md:translate-x-0 transition-transform duration-200 z-20 md:z-auto">
+            <div class="h-11 border-b border-zinc-800/80 panel-surface px-3 flex items-center justify-between shrink-0">
+                <div class="flex items-center space-x-2 overflow-hidden">
+                    <button onclick="mobileReturnToNavigation()" class="md:hidden text-zinc-400 hover:text-white pr-2 border-r border-zinc-800 font-sans text-xs flex items-center space-x-1 active:bg-zinc-800/40 p-1 rounded">
+                        <span>←</span> <span class="font-bold">Back</span>
+                    </button>
+                    <span id="diff-file-path" class="text-[#FFB236] bg-amber-950/20 px-2 py-0.5 border border-amber-900/30 rounded font-mono text-[10px] md:text-xs truncate">---</span>
                 </div>
-                <div id="diff-stats-pill" class="font-mono text-[11px]">
+                <div id="diff-stats-pill" class="font-mono text-[10px] whitespace-nowrap pl-2">
                     </div>
             </div>
 
             <div class="flex-1 overflow-y-auto font-mono text-[13px] leading-relaxed relative">
-                <div class="w-full border-b border-zinc-900 bg-zinc-950/40 px-4 py-2 text-red-400 select-none text-[11px] uppercase font-bold tracking-wider">
-                    ⚠️ THE PROBLEM STATEMENT & LEGACY ARCHITECTURE CONSTRAINTS
+                <div class="w-full border-b border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-red-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider">
+                    ⚠️ PROBLEM STATEMENT & LEGACY ARCHITECTURE CONSTRAINTS
                 </div>
-                <div id="diff-red-container" class="w-full">
+                <div id="diff-red-container" class="w-full bg-red-950/5">
                     </div>
 
-                <div class="w-full border-y border-zinc-900 bg-zinc-950/40 px-4 py-2 text-emerald-400 select-none text-[11px] uppercase font-bold tracking-wider mt-2">
-                    🚀 CASE STUDY: SYSTEM APPROACH & TECH STACK JUSTIFICATION
+                <div class="w-full border-y border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-emerald-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider mt-2">
+                    🚀 APPROACH & TECH STACK JUSTIFICATION
                 </div>
-                <div id="diff-green-container" class="w-full">
+                <div id="diff-green-container" class="w-full bg-emerald-950/5">
                     </div>
+
+                <footer class="panel-surface border-t border-zinc-800/80 flex flex-col mt-4">
+                    <div class="h-8 bg-black/40 px-3 flex items-center justify-between border-b border-zinc-900/60 select-none">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-purple-400 font-bold">⌨</span>
+                            <span class="font-bold uppercase tracking-wider text-[10px] text-zinc-400">Terminal Shell Session</span>
+                        </div>
+                        <span class="text-[9px] text-zinc-600 font-mono hidden xs:inline">tty connected</span>
+                    </div>
+                    <div class="p-3 bg-[#05060a] font-mono text-zinc-400 space-y-2 text-[11px]">
+                        <div class="flex flex-wrap items-center gap-x-2">
+                            <span class="text-emerald-500">raihamehdi@production:~$</span>
+                            <span class="text-zinc-100 font-medium">curl -s https://api.raihamehdi.dev/contact</span>
+                        </div>
+                        <div class="pl-3 border-l-2 border-zinc-800/80 my-1 space-y-2 text-[12px]">
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3">
+                                <span class="text-zinc-500 font-bold w-16">GitHub:</span>
+                                <a href="https://github.com/raihamehdi" target="_blank" class="text-[#FFB236] hover:underline">github.com/raihamehdi</a>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3">
+                                <span class="text-zinc-500 font-bold w-16">LinkedIn:</span>
+                                <a href="https://linkedin.com/in/raiha-mehdi-423916243" target="_blank" class="text-purple-400 hover:underline break-all">linkedin.com/in/raiha-mehdi-423916243</a>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3">
+                                <span class="text-zinc-500 font-bold w-16">Email:</span>
+                                <a href="mailto:raihamehdi@gmail.com" class="text-emerald-400 hover:underline">raihamehdi@gmail.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
             </div>
-
-            <footer class="panel-surface border-t border-zinc-800/80 flex flex-col shrink-0">
-                <div class="h-8 bg-black/40 px-4 flex items-center justify-between border-b border-zinc-900/60 select-none">
-                    <div class="flex items-center space-x-2">
-                        <span class="text-purple-400 font-bold">⌨</span>
-                        <span class="font-bold uppercase tracking-wider text-[10px] text-zinc-400">Terminal Shell Session</span>
-                        <span class="text-zinc-600 font-mono text-[10px]"> (bash - raihamehdi@production:~ )</span>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                        <span class="text-[10px] text-zinc-500 font-mono">tty connected</span>
-                    </div>
-                </div>
-                <div class="p-4 bg-[#05060a] font-mono text-zinc-400 space-y-2 selection:bg-amber-500/20 selection:text-amber-300">
-                    <div class="flex items-center space-x-2">
-                        <span class="text-emerald-500">raihamehdi@production:~$</span>
-                        <span class="text-zinc-100 font-medium">curl -s https://api.raihamehdi.dev/contact</span>
-                    </div>
-                    <div class="pl-4 border-l-2 border-zinc-800/80 my-2 space-y-1.5 text-[11px]">
-                        <div class="text-zinc-500">✓ Parsing live architecture communication channels:</div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-zinc-500 w-20 inline-block">→ GitHub:</span>
-                            <a href="https://github.com/raihamehdi" target="_blank" class="text-[#FFB236] hover:underline hover:text-amber-400 transition-colors">github.com/raihamehdi</a>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-zinc-500 w-20 inline-block">→ LinkedIn:</span>
-                            <a href="https://linkedin.com/in/raiha-mehdi-423916243" target="_blank" class="text-purple-400 hover:underline hover:text-purple-300 transition-colors">linkedin.com/in/raiha-mehdi-423916243</a>
-                        </div>
-                        <div class="flex items-center space-x-3">
-                            <span class="text-zinc-500 w-20 inline-block">→ Email:</span>
-                            <a href="mailto:abdemehdi49@gmail.com" class="text-emerald-400 hover:underline hover:text-emerald-300 transition-colors">abdemehdi49@gmail.com</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </section>
     </main>
+
+    <nav class="h-14 panel-surface border-t border-zinc-800/80 flex md:hidden items-center justify-around shrink-0 z-30 select-none">
+        <button id="mobile-nav-tree" class="flex flex-col items-center justify-center space-y-0.5 text-zinc-500 w-20 py-1 transition-colors">
+            <span class="text-base">📁</span>
+            <span class="text-[9px] font-bold tracking-wider font-mono">FILE TREE</span>
+        </button>
+        <button id="mobile-nav-git" class="flex flex-col items-center justify-center space-y-0.5 text-[#FFB236] w-20 py-1 transition-colors">
+            <span class="text-base">🌿</span>
+            <span class="text-[9px] font-bold tracking-wider font-mono">HISTORY</span>
+        </button>
+        <button id="mobile-nav-diff" class="flex flex-col items-center justify-center space-y-0.5 text-zinc-500 w-20 py-1 transition-colors">
+            <span class="text-base">🔍</span>
+            <span class="text-[9px] font-bold tracking-wider font-mono">ACTIVE DIFF</span>
+        </button>
+    </nav>
 
     <script>
         const COMMIT_MATRIX = [
@@ -243,7 +249,7 @@
                     "# Mapped financial mechanics directly to relational entities with atomic isolation scopes.",
                     "",
                     "# [WHY THE TECH STACK?]",
-                    "# - Django ORM: Utilized to enforce absolute state preservation, transactions, and robust schema validation.",
+                    "# - Django ORM: Enforces absolute state preservation, transactions, and robust schema validation.",
                     "# - Django REST Serializers: Sanitizes raw payloads instantly, ensuring zero bad data reaches the execution stream.",
                     "",
                     "def process_market_logs(raw_data):",
@@ -445,36 +451,80 @@
             }
         ];
 
-        // NAVIGATION TAB ARCHITECTURE SWITCH CONTROLLERS
-        const tabTree = document.getElementById('tab-handle-tree');
-        const tabGit = document.getElementById('tab-handle-git');
-        const paneTree = document.getElementById('pane-tree-view');
-        const paneGit = document.getElementById('pane-git-view');
+        // APPARATUS VIEWPORT CONTROLLER ARCHITECTURE
+        let activeTabContext = 'git'; // 'tree', 'git', 'diff'
+        const rightStagePane = document.getElementById('right-workspace-pane');
 
-        function switchTabTo(target) {
-            if (target === 'tree') {
-                tabTree.className = "px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]";
-                tabGit.className = "px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-colors";
+        function switchWorkspaceTab(context) {
+            activeTabContext = context;
+            const paneTree = document.getElementById('pane-tree-view');
+            const paneGit = document.getElementById('pane-git-view');
+
+            // Handle Sub-panel visibility switches
+            if (context === 'tree') {
                 paneTree.classList.remove('hidden');
                 paneGit.classList.add('hidden');
-            } else {
-                tabGit.className = "px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]";
-                tabTree.className = "px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-colors";
+                rightStagePane.classList.add('translate-x-full'); // slide view back on mobile
+            } else if (context === 'git') {
                 paneGit.classList.remove('hidden');
                 paneTree.classList.add('hidden');
+                rightStagePane.classList.add('translate-x-full'); // slide view back on mobile
+            } else if (context === 'diff') {
+                rightStagePane.classList.remove('translate-x-full'); // focus staging on mobile viewport
+            }
+
+            updateTabVisualStates();
+        }
+
+        function updateTabVisualStates() {
+            // Bind Elements
+            const tTree = document.getElementById('tab-handle-tree');
+            const tGit = document.getElementById('tab-handle-git');
+            const tDiff = document.getElementById('tab-handle-diff');
+
+            const mTree = document.getElementById('mobile-nav-tree');
+            const mGit = document.getElementById('mobile-nav-git');
+            const mDiff = document.getElementById('mobile-nav-diff');
+
+            const activeClassDesk = "px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]";
+            const inactiveClassDesk = "px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-all";
+
+            // Desk handles re-render
+            tTree.className = activeTabContext === 'tree' ? activeClassDesk : inactiveClassDesk;
+            tGit.className = activeTabContext === 'git' ? activeClassDesk : inactiveClassDesk;
+            tDiff.className = activeTabContext === 'diff' ? activeClassDesk : inactiveClassDesk;
+
+            // Mobile active navigation text markers colors
+            mTree.className = `flex flex-col items-center justify-center space-y-0.5 w-20 py-1 ${activeTabContext === 'tree' ? 'text-[#FFB236]' : 'text-zinc-500'}`;
+            mGit.className = `flex flex-col items-center justify-center space-y-0.5 w-20 py-1 ${activeTabContext === 'git' ? 'text-[#FFB236]' : 'text-zinc-500'}`;
+            mDiff.className = `flex flex-col items-center justify-center space-y-0.5 w-20 py-1 ${activeTabContext === 'diff' ? 'text-[#FFB236]' : 'text-zinc-500'}`;
+        }
+
+        // DESKTOP INTERFACE DOM BINDERS
+        document.getElementById('tab-handle-tree').addEventListener('click', () => switchWorkspaceTab('tree'));
+        document.getElementById('tab-handle-git').addEventListener('click', () => switchWorkspaceTab('git'));
+        document.getElementById('tab-handle-diff').addEventListener('click', () => switchWorkspaceTab('diff'));
+
+        // MOBILE STACK DOM BINDERS 
+        document.getElementById('mobile-nav-tree').addEventListener('click', () => switchWorkspaceTab('tree'));
+        document.getElementById('mobile-nav-git').addEventListener('click', () => switchWorkspaceTab('git'));
+        document.getElementById('mobile-nav-diff').addEventListener('click', () => switchWorkspaceTab('diff'));
+
+        function mobileReturnToNavigation() {
+            switchWorkspaceTab('git');
+        }
+
+        function routeFileSelect(commitId) {
+            activateCommitNode(commitId);
+            // Auto-advance to split review code screen on phone aspect frames
+            if (window.innerWidth < 768) {
+                switchWorkspaceTab('diff');
+            } else {
+                switchWorkspaceTab('git');
             }
         }
 
-        tabTree.addEventListener('click', () => switchTabTo('tree'));
-        tabGit.addEventListener('click', () => switchTabTo('git'));
-
-        // ROUTE SELECTOR LINK FROM FILE SYSTEM EXPLORER
-        function routeFileSelect(commitId) {
-            switchTabTo('git');
-            activateCommitNode(commitId);
-        }
-
-        // RENDER LEAF NODES FUNCTION
+        // RENDER METHODSTREAM LEDGER CARD TILES
         function buildCommitGraphList() {
             const container = document.getElementById('commit-container');
             container.innerHTML = '';
@@ -482,7 +532,7 @@
             COMMIT_MATRIX.forEach((commit, idx) => {
                 const nodeButton = document.createElement('button');
                 nodeButton.id = commit.id;
-                nodeButton.className = `w-full text-left p-3 rounded-lg border transition-all duration-200 block relative cursor-pointer group ${
+                nodeButton.className = `w-full text-left p-3 rounded-lg border transition-all duration-150 block relative cursor-pointer group ${
                     idx === 0 
                     ? 'bg-[#1A1D29]/70 border-zinc-700/80 shadow-md shadow-black/40 ring-1 ring-amber-500/20' 
                     : 'bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800'
@@ -496,31 +546,34 @@
                 nodeButton.innerHTML = `
                     <div class="flex items-center justify-between mb-1.5 font-mono text-[10px]">
                         <div class="flex items-center space-x-2">
-                            <span class="text-zinc-500 font-bold group-hover:text-zinc-300 transition-colors">${commit.hash}</span>
-                            <span class="px-2 py-0.5 border text-[9px] font-semibold rounded ${tagColorStyle}">${commit.tag}</span>
+                            <span class="text-zinc-500 font-bold group-hover:text-zinc-300">${commit.hash}</span>
+                            <span class="px-1.5 py-0.5 border text-[9px] font-semibold rounded ${tagColorStyle}">${commit.tag}</span>
                         </div>
                         <span class="text-zinc-600 font-medium">${commit.timestamp}</span>
                     </div>
-                    <p class="text-zinc-300 font-sans tracking-wide text-xs line-clamp-2 leading-snug group-hover:text-zinc-100 transition-colors">${commit.message}</p>
+                    <p class="text-zinc-300 font-sans tracking-wide text-xs line-clamp-2 leading-snug group-hover:text-zinc-100">${commit.message}</p>
                 `;
 
                 nodeButton.addEventListener('click', () => {
                     activateCommitNode(commit.id);
+                    if (window.innerWidth < 768) {
+                        switchWorkspaceTab('diff');
+                    }
                 });
 
                 container.appendChild(nodeButton);
             });
         }
 
-        // INTERACTIVE ENGINE CORE SWITCH ENGINE 
+        // INTERACTIVE CORE SWAP RENDER ENGINE
         function activateCommitNode(targetId) {
             COMMIT_MATRIX.forEach(commit => {
                 const element = document.getElementById(commit.id);
                 if (element) {
                     if (commit.id === targetId) {
-                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-200 block relative cursor-pointer group bg-[#1A1D29]/70 border-zinc-700/80 shadow-md shadow-black/40 ring-1 ring-amber-500/20";
+                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-150 block relative cursor-pointer group bg-[#1A1D29]/70 border-zinc-700/80 shadow-md shadow-black/40 ring-1 ring-amber-500/20";
                     } else {
-                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-200 block relative cursor-pointer group bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800";
+                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-150 block relative cursor-pointer group bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800";
                     }
                 }
             });
@@ -530,35 +583,33 @@
 
             document.getElementById('diff-file-path').innerText = `📄 ${currentPayload.file}`;
             document.getElementById('diff-stats-pill').innerHTML = `
-                <span class="text-emerald-400 font-medium">+${currentPayload.additions} additions</span> 
-                <span class="text-zinc-600 px-1">|</span> 
-                <span class="text-red-400 font-medium">-${currentPayload.deletions} deletions</span>
+                <span class="text-emerald-400 font-medium">+${currentPayload.additions}</span> 
+                <span class="text-zinc-600 text-[9px] px-0.5">/</span> 
+                <span class="text-red-400 font-medium">-${currentPayload.deletions}</span>
             `;
 
-            // Populate Red Legacy Diff Panel Blocks
+            // Populate Red Blocks
             const redContainer = document.getElementById('diff-red-container');
             redContainer.innerHTML = '';
             currentPayload.redBlock.forEach((line, index) => {
                 const lineRow = document.createElement('div');
-                lineRow.className = "flex w-full bg-red-950/15 border-l-2 border-red-500/80 text-red-200/90 hover:bg-red-950/25 transition-colors py-0.5";
+                lineRow.className = "flex w-full border-l-2 border-red-500/80 text-red-200/90 hover:bg-red-950/20 transition-colors py-0.5";
                 lineRow.innerHTML = `
-                    <div class="line-num-width text-right pr-4 select-none text-red-800/80 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
-                    <div class="line-num-width text-center select-none text-red-700/80 text-[10px] font-mono pr-2">-</div>
-                    <div class="pl-4 whitespace-pre font-mono tracking-wide overflow-x-auto">${escapeHtml(line)}</div>
+                    <div class="line-num-width text-right pr-3 select-none text-red-800/60 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
+                    <div class="pl-3 whitespace-pre font-mono tracking-wide overflow-x-auto text-[13px]">${escapeHtml(line)}</div>
                 `;
                 redContainer.appendChild(lineRow);
             });
 
-            // Populate Green Solution Diff Panel Blocks
+            // Populate Green Blocks
             const greenContainer = document.getElementById('diff-green-container');
             greenContainer.innerHTML = '';
             currentPayload.greenBlock.forEach((line, index) => {
                 const lineRow = document.createElement('div');
-                lineRow.className = "flex w-full bg-emerald-950/15 border-l-2 border-emerald-500/80 text-emerald-100 hover:bg-emerald-950/25 transition-colors py-0.5";
+                lineRow.className = "flex w-full border-l-2 border-emerald-500/80 text-emerald-100 hover:bg-emerald-950/20 transition-colors py-0.5";
                 lineRow.innerHTML = `
-                    <div class="line-num-width text-right pr-4 select-none text-emerald-800/80 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
-                    <div class="line-num-width text-center select-none text-emerald-700/80 text-[10px] font-mono pr-2">+</div>
-                    <div class="pl-4 whitespace-pre font-mono tracking-wide overflow-x-auto">${escapeHtml(line)}</div>
+                    <div class="line-num-width text-right pr-3 select-none text-emerald-800/60 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
+                    <div class="pl-3 whitespace-pre font-mono tracking-wide overflow-x-auto text-[13px]">${escapeHtml(line)}</div>
                 `;
                 greenContainer.appendChild(lineRow);
             });
