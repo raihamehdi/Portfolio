@@ -3,10 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>raihamehdi // Core Systems Architecture Workspace</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Core Systems Architecture Workspace</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- JetBrains Mono Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
@@ -17,7 +15,6 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
-        /* Custom scrollbar to match IDE styles */
         ::-webkit-scrollbar {
             width: 4px;
             height: 4px;
@@ -39,9 +36,7 @@
 </head>
 <body class="h-dvh overflow-hidden text-zinc-300 text-xs flex flex-col selection:bg-purple-500/30 selection:text-purple-200">
 
-    <!-- GLOBAL HEADER BAR -->
     <header class="h-14 md:h-12 panel-surface border-b border-zinc-800/80 flex flex-col md:flex-row items-center justify-between px-3 md:px-4 shrink-0 select-none justify-center gap-1 md:gap-0">
-        <!-- Path, Status & Dot Controllers Alignment -->
         <div class="flex items-center justify-between md:justify-start w-full md:w-1/4">
             <div class="hidden md:flex space-x-2 mr-6">
                 <div class="w-3 h-3 rounded-full bg-red-500/70 border border-red-600/40"></div>
@@ -49,118 +44,90 @@
                 <div class="w-3 h-3 rounded-full bg-green-500/70 border border-green-600/40"></div>
             </div>
             <div class="flex items-center space-x-2 font-medium tracking-wide text-[11px] md:text-xs">
-                <span class="text-zinc-500">raihamehdi</span>
+                <span class="text-zinc-500">developer</span>
                 <span class="text-zinc-600">/</span>
-                <span class="text-zinc-200 truncate max-w-[140px] md:max-w-none">core-systems</span>
+                <span class="text-zinc-200 truncate max-w-[140px] md:max-w-none">core-portfolio</span>
                 <span class="flex items-center space-x-1 px-1.5 py-0.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 text-[9px] text-emerald-400 font-semibold uppercase tracking-wider">
                     <span class="w-1 h-1 rounded-full bg-emerald-400 animate-pulse"></span>
-                    <span class="hidden xs:inline">Live</span>
+                    <span class="hidden xs:inline">Production</span>
                 </span>
             </div>
-            <!-- Mobile-only counter summary -->
             <div class="flex items-center space-x-2 font-mono text-[10px] md:hidden">
-                <span class="text-emerald-500 font-bold">+1.4k</span>
-                <span class="text-red-500 font-bold">-412</span>
+                <span class="text-emerald-500 font-bold">+229</span>
+                <span class="text-red-500 font-bold">-69</span>
             </div>
         </div>
 
-        <!-- DESKTOP TOP NAVIGATION TABS (HIDDEN ON MOBILE VIEWPORTS) -->
         <div class="hidden md:flex h-full items-end justify-center w-2/4 space-x-1">
-            <div id="tab-handle-tree" class="px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-all">
-                <span>📁</span> <span>File Tree</span>
-            </div>
             <div id="tab-handle-git" class="px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]">
-                <span class="text-[#FFB236]">🌿</span> <span>Git History</span>
+                <span>🌿</span> <span>Engineering Logs</span>
+            </div>
+            <div id="tab-handle-tree" class="px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-all">
+                <span>📁</span> <span>Source Explorer</span>
             </div>
             <div id="tab-handle-diff" class="px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-all">
-                <span>🔍</span> <span>Active Diff</span>
+                <span>🔍</span> <span>Code Inspector</span>
             </div>
         </div>
 
-        <!-- DESKTOP COUNTER STATS SYSTEM -->
         <div class="hidden md:flex w-1/4 justify-end items-center space-x-4 font-mono">
-            <div class="text-right"><span class="text-emerald-500 font-semibold">+1,420</span> <span class="text-zinc-600">additions</span></div>
-            <div class="text-right"><span class="text-red-500 font-semibold">-412</span> <span class="text-zinc-600">deletions</span></div>
+            <div class="text-right"><span class="text-emerald-500 font-semibold">+229</span> <span class="text-zinc-600">additions</span></div>
+            <div class="text-right"><span class="text-red-500 font-semibold">-69</span> <span class="text-zinc-600">deletions</span></div>
         </div>
     </header>
 
-    <!-- CORE WORKSPACE INTERFACE LAYOUT -->
     <main class="flex-1 flex overflow-hidden w-full relative">
         
-        <!-- LEFT WORKSPACE CONSOLE PANE (FILE SYSTEM EXPLORER & STREAM GRAPH) -->
         <section id="left-workspace-pane" class="w-full md:w-[38%] border-r border-zinc-800/80 panel-surface flex flex-col overflow-hidden relative shrink-0">
             
-            <!-- GIT HISTORY SUB-VIEW ENGINE -->
             <div id="pane-git-view" class="w-full h-full flex flex-col">
                 <div class="p-3 border-b border-zinc-800/80 bg-black/20 flex items-center justify-between shrink-0">
-                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Version Stream Ledger</span>
-                    <span class="text-zinc-600 text-[10px] hidden xs:inline">Select a node to view structural changes</span>
+                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Production Systems & Projects</span>
                 </div>
-                
                 <div class="flex-1 overflow-y-auto relative p-3 md:p-4 flex">
                     <div class="absolute top-0 bottom-0 left-5 w-16 pointer-events-none z-0">
                         <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg">
                             <line x1="16" y1="0" x2="16" y2="100%" stroke="#1A1D29" stroke-width="2"/>
-                            <path d="M 16,50 Q 48,100 48,160 T 16,340" fill="none" stroke="#FFB236" stroke-width="1.5" stroke-dasharray="3,3" opacity="0.4"/>
                         </svg>
                     </div>
                     <div id="commit-container" class="w-full space-y-3 relative z-10 pl-7">
-                        <!-- Dynamic Nodes Injection Inside Scribing Blocks -->
-                    </div>
+                        </div>
                 </div>
             </div>
 
-            <!-- MODULE DIRECTORY TREE FILE SUB-VIEW -->
             <div id="pane-tree-view" class="w-full h-full flex flex-col hidden">
                 <div class="p-3 border-b border-zinc-800/80 bg-black/20 flex items-center justify-between shrink-0">
-                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Repository Module Hierarchy</span>
+                    <span class="font-bold tracking-wider text-zinc-400 uppercase text-[10px]">Workspace Directory</span>
                 </div>
-                <div class="flex-1 overflow-y-auto p-4 font-mono space-y-2 text-zinc-400 text-[11px]">
-                    <div class="text-zinc-500 font-bold mb-2">📁 core-systems-architecture</div>
-                    <div class="pl-3 border-l border-zinc-800 space-y-2">
-                        <div class="text-zinc-500 font-bold select-none">📁 trading/</div>
-                        <div onclick="routeFileSelect('commit-1')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
-                            <span>📄 analytics_engine.py</span>
-                            <span class="text-[9px] text-[#FFB236] bg-amber-950/40 px-1 border border-amber-900/30 rounded">feat</span>
+                <div class="flex-1 overflow-y-auto p-4 font-mono space-y-3 text-zinc-400 text-[11px]">
+                    <div class="text-zinc-500 font-bold">📁 root / portfolio-core</div>
+                    <div class="pl-3 border-l border-zinc-800 space-y-2.5">
+                        
+                        <div onclick="routeFileSelect('profile')" class="py-1 px-2 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
+                            <span>📝 about_developer.md</span>
+                            <span class="text-[9px] text-purple-400 bg-purple-950/40 px-1 border border-purple-900/30 rounded">profile</span>
+                        </div>
+
+                        <div onclick="routeFileSelect('tech-stack')" class="py-1 px-2 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
+                            <span>⚙️ tech_stack.json</span>
+                            <span class="text-[9px] text-sky-400 bg-sky-950/40 px-1 border border-sky-900/30 rounded">config</span>
+                        </div>
+
+                        <div onclick="routeFileSelect('academics')" class="py-1 px-2 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
+                            <span>🎓 academic_registry.log</span>
+                            <span class="text-[9px] text-emerald-400 bg-emerald-950/40 px-1 border border-emerald-900/30 rounded">honors</span>
                         </div>
                         
-                        <div class="text-zinc-500 font-bold select-none pt-1">📁 crypto/</div>
-                        <div onclick="routeFileSelect('commit-2')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
-                            <span>📄 intelligence_pipeline.py</span>
-                            <span class="text-[9px] text-[#FFB236] bg-amber-950/40 px-1 border border-amber-900/30 rounded">feat</span>
-                        </div>
+                        <div class="text-zinc-500 font-bold pt-1">📁 featured_projects /</div>
+                        <div id="file-tree-projects-container" class="pl-3 border-l border-zinc-800 space-y-1.5">
+                            </div>
 
-                        <div class="text-zinc-500 font-bold select-none pt-1">📁 core/</div>
-                        <div onclick="routeFileSelect('commit-3')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
-                            <span>📄 restaurant_api.py</span>
-                            <span class="text-[9px] text-sky-400 bg-sky-950/40 px-1 border border-sky-900/30 rounded">perf</span>
-                        </div>
-
-                        <div class="text-zinc-500 font-bold select-none pt-1">📁 gateway/</div>
-                        <div onclick="routeFileSelect('commit-4')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
-                            <span>📄 smart_watt_secure.py</span>
-                            <span class="text-[9px] text-[#FFB236] bg-amber-950/40 px-1 border border-amber-900/30 rounded">feat</span>
-                        </div>
-
-                        <div class="text-zinc-500 font-bold select-none pt-1">📁 ledger/</div>
-                        <div onclick="routeFileSelect('commit-5')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
-                            <span>📄 land_registry.py</span>
-                            <span class="text-[9px] text-red-400 bg-red-950/40 px-1 border border-red-900/30 rounded">sec</span>
-                        </div>
-
-                        <div class="text-zinc-500 font-bold select-none pt-1">📁 config/</div>
-                        <div onclick="routeFileSelect('commit-6')" class="pl-4 py-1.5 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group">
-                            <span>📄 paradigms.json</span>
-                            <span class="text-[9px] text-zinc-400 bg-zinc-950/40 px-1 border border-zinc-800/30 rounded">v1.0.0</span>
-                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- RIGHT WORKSPACE CONSOLE PANE (HIGH-CONTRAST DYNAMIC CASE STUDY VIEWER) -->
         <section id="right-workspace-pane" class="w-full md:w-[62%] flex flex-col bg-[#020204] overflow-hidden absolute md:relative inset-x-0 top-0 bottom-0 md:inset-auto md:relative translate-x-full md:translate-x-0 transition-transform duration-200 z-20 md:z-auto">
-            <!-- Mobile Switcher & Code Diff Top Context Header Bar -->
             <div class="h-11 border-b border-zinc-800/80 panel-surface px-3 flex items-center justify-between shrink-0">
                 <div class="flex items-center space-x-2 overflow-hidden">
                     <button onclick="mobileReturnToNavigation()" class="md:hidden text-zinc-400 hover:text-white pr-2 border-r border-zinc-800 font-sans text-xs flex items-center space-x-1 active:bg-zinc-800/40 p-1 rounded">
@@ -169,37 +136,23 @@
                     <span id="diff-file-path" class="text-[#FFB236] bg-amber-950/20 px-2 py-0.5 border border-amber-900/30 rounded font-mono text-[10px] md:text-xs truncate">---</span>
                 </div>
                 <div id="diff-stats-pill" class="font-mono text-[10px] whitespace-nowrap pl-2">
-                    <!-- Dynamic Line Counts Injected -->
-                </div>
+                    </div>
             </div>
 
-            <!-- Code Framework Stage Container -->
-            <!-- STICKY TERMINAL STRUCTURAL FIX: split view into dynamic inner frames on desktop layout -->
             <div class="flex-1 flex flex-col overflow-y-auto md:overflow-hidden relative">
                 
-                <!-- Scrollable Content Frame (Code Diff Area) -->
                 <div class="flex-1 md:overflow-y-auto font-mono text-[13px] leading-relaxed relative">
-                    <!-- Legacy/Red Case Problem Statement Segment Header -->
-                    <div class="w-full border-b border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-red-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider">
-                        ⚠️ PROBLEM STATEMENT & LEGACY ARCHITECTURE CONSTRAINTS
+                    <div id="primary-view-title" class="w-full border-b border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-zinc-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider">
+                        FILE CONTENT RUNTIME
                     </div>
-                    <div id="diff-red-container" class="w-full bg-red-950/5">
-                        <!-- Block Injections -->
+                    <div id="diff-red-container" class="w-full bg-red-950/5"></div>
+                    <div id="primary-view-secondary-title" class="w-full border-y border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-zinc-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider mt-2 hidden">
+                        SUB SECTION CONTENT
                     </div>
-
-                    <!-- Solution/Green Case Solution Engineering Segment Header -->
-                    <div class="w-full border-y border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-emerald-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider mt-2">
-                        🚀 APPROACH & TECH STACK JUSTIFICATION
-                    </div>
-                    <div id="diff-green-container" class="w-full bg-emerald-950/5">
-                        <!-- Block Injections -->
-                    </div>
-                    
-                    <!-- Mobile Viewport Placeholder Helper to let terminal render neatly inline without truncation cuts -->
+                    <div id="diff-green-container" class="w-full bg-emerald-950/5"></div>
                     <div class="h-4 md:hidden"></div>
                 </div>
 
-                <!-- TERMINAL CONSOLE FOOTER: Fixed on Desktop, inline scroll on mobile -->
                 <footer class="panel-surface border-t border-zinc-800/80 flex flex-col shrink-0 md:sticky md:bottom-0 z-10">
                     <div class="h-8 bg-black/40 px-3 flex items-center justify-between border-b border-zinc-900/60 select-none">
                         <div class="flex items-center space-x-2">
@@ -210,8 +163,8 @@
                     </div>
                     <div class="p-3 bg-[#05060a] font-mono text-zinc-400 space-y-2 text-[11px]">
                         <div class="flex flex-wrap items-center gap-x-2">
-                            <span class="text-emerald-500">raihamehdi@production:~$</span>
-                            <span class="text-zinc-100 font-medium">curl -s https://api.raihamehdi.dev/contact</span>
+                            <span class="text-emerald-500">developer@production:~$</span>
+                            <span class="text-zinc-100 font-medium">curl -s https://api.identity.dev/contact</span>
                         </div>
                         <div class="pl-3 border-l-2 border-zinc-800/80 my-1 space-y-2 text-[12px]">
                             <div class="flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-3">
@@ -234,36 +187,81 @@
         </section>
     </main>
 
-    <!-- MOBILE NAVIGATION BOTTOM STICKY BAR BAR PANEL TOOLKIT -->
     <nav class="h-14 panel-surface border-t border-zinc-800/80 flex md:hidden items-center justify-around shrink-0 z-30 select-none">
-        <button id="mobile-nav-tree" class="flex flex-col items-center justify-center space-y-0.5 text-zinc-500 w-20 py-1 transition-colors">
-            <span class="text-base">📁</span>
-            <span class="text-[9px] font-bold tracking-wider font-mono">FILE TREE</span>
-        </button>
-        <button id="mobile-nav-git" class="flex flex-col items-center justify-center space-y-0.5 text-[#FFB236] w-20 py-1 transition-colors">
+        <button id="mobile-nav-git" class="flex flex-col items-center justify-center space-y-0.5 text-[#FFB236] w-20 py-1">
             <span class="text-base">🌿</span>
-            <span class="text-[9px] font-bold tracking-wider font-mono">HISTORY</span>
+            <span class="text-[9px] font-bold tracking-wider font-mono">LOGS</span>
         </button>
-        <button id="mobile-nav-diff" class="flex flex-col items-center justify-center space-y-0.5 text-zinc-500 w-20 py-1 transition-colors">
+        <button id="mobile-nav-tree" class="flex flex-col items-center justify-center space-y-0.5 text-zinc-500 w-20 py-1">
+            <span class="text-base">📁</span>
+            <span class="text-[9px] font-bold tracking-wider font-mono">EXPLORER</span>
+        </button>
+        <button id="mobile-nav-diff" class="flex flex-col items-center justify-center space-y-0.5 text-zinc-500 w-20 py-1">
             <span class="text-base">🔍</span>
-            <span class="text-[9px] font-bold tracking-wider font-mono">ACTIVE DIFF</span>
+            <span class="text-[9px] font-bold tracking-wider font-mono">INSPECTOR</span>
         </button>
     </nav>
 
-    <!-- DATA MATRIX SWITCH ENGINE SCRIPT -->
     <script>
-        const COMMIT_MATRIX = [
-            {
-                id: "commit-1",
+        const COMPONENT_REGISTRY = {
+            "profile": {
+                isProject: false,
+                file: "about_developer.md",
+                meta: "profile_render",
+                title1: "👤 Profile Statement // Architecture Philosophy",
+                content1: [
+                    "# Raiha Mehdi",
+                    "# Systems Architect & Backend Engineer specializing in resilient software ecosystems.",
+                    "# Focused on high-performance backends, concurrency management, and automated trading infrastructure.",
+                    "",
+                    "# [PHILOSOPHY]",
+                    "# I value strict data integrity, thread-isolated atomic operations, and explicit boundaries.",
+                    "# Every project line committed targets systemic complexity reduction and absolute optimization."
+                ],
+                content2: []
+            },
+            "tech-stack": {
+                isProject: false,
+                file: "tech_stack.json",
+                meta: "config_manifest",
+                title1: "⚙️ Core Infrastructure Manifest // Environment Layout",
+                content1: [
+                    "{",
+                    "  \"languages\": [\"Python\", \"PHP\", \"C++\", \"JavaScript\", \"SQL\"],",
+                    "  \"frameworks\": [\"Django\", \"FastAPI\", \"Laravel\", \"TailwindCSS\"],",
+                    "  \"infrastructure\": [\"PostgreSQL\", \"Redis Cluster\", \"Docker\", \"Google Cloud Platform (GCP)\", \"Git\"],",
+                    "  \"specialization\": [\"Distributed Backend Systems\", \"High-Concurrency Engines\", \"Asynchronous Data Streams\"]",
+                    "}"
+                ],
+                content2: []
+            },
+            "academics": {
+                isProject: false,
+                file: "academic_registry.log",
+                meta: "honors_verified",
+                title1: "Academic Records // Verified Milestones",
+                content1: [
+                    "[LOG] BS in Computer Science Completed.",
+                    "[LOG] Academic Distinction: Gold Medalist.",
+                    "[LOG] Performance Matrix Baseline: 3.78 / 4.00 CGPA.",
+                    "[LOG] Core Target Domains: Distributed Analytics, Relational Calculus, Protocol Design."
+                ],
+                content2: []
+            },
+            // THE 6 TARGET PROJECTS MAPPED WITH EXPLICIT NAMES
+            "commit-1": {
+                isProject: true,
+                projectName: "Market Analytics Engine",
                 hash: "e4b19a",
                 timestamp: "2026.06",
-                tag: "feat(analytics)",
+                tag: "Data Integrity",
                 tagType: "feature",
                 message: "Engineered clean data normalization constraints using Django ORM.",
                 file: "trading/analytics_engine.py",
                 additions: 34,
                 deletions: 12,
-                redBlock: [
+                title1: "⚠️ PROBLEM STATEMENT & LEGACY CONSTRAINTS",
+                content1: [
                     "# [PROBLEM STATEMENT]",
                     "# - Manual trading metrics were being tracked via fragile, asynchronous spreadsheets.",
                     "# - High human error rates led to corrupted trade tracking records and bad lookups.",
@@ -274,7 +272,8 @@
                     "    for row in raw_data.get('rows', []):",
                     "        save_to_csv_fallback(row[0], row[1], row[2]) # Fragmented execution loop"
                 ],
-                greenBlock: [
+                title2: "🚀 APPROACH & TECH STACK JUSTIFICATION",
+                content2: [
                     "# [THE APPROACH]",
                     "# We introduced concrete normalization contracts at the transactional API entry-point.",
                     "# Mapped financial mechanics directly to relational entities with atomic isolation scopes.",
@@ -295,17 +294,19 @@
                     "            return MarketSessionMetricsEngine.compute(market_session)"
                 ]
             },
-            {
-                id: "commit-2",
+            "commit-2": {
+                isProject: true,
+                projectName: "Crypto Intelligence Pipeline",
                 hash: "3c2d11",
-                timestamp: "2026.05",
-                tag: "feat(intel)",
+                timestamp: "2026.01",
+                tag: "Async Streams",
                 tagType: "feature",
                 message: "Utilized a rolling window computation approach over complex exchange datasets.",
                 file: "crypto/intelligence_pipeline.py",
                 additions: 42,
                 deletions: 15,
-                redBlock: [
+                title1: "⚠️ PROBLEM STATEMENT & LEGACY CONSTRAINTS",
+                content1: [
                     "# [PROBLEM STATEMENT]",
                     "# - Single-threaded fetching of volatile cryptocurrency exchange prices introduced severe latency lag.",
                     "# - Complete lack of historical context and real-time correlation indexes during sharp trend movements.",
@@ -315,7 +316,8 @@
                     "    data = self.exchange.fetch_ticker('BTC/USDT')",
                     "    self.db.save(data['last']) # Blocking thread operation"
                 ],
-                greenBlock: [
+                title2: "🚀 APPROACH & TECH STACK JUSTIFICATION",
+                content2: [
                     "# [THE APPROACH]",
                     "# Re-architected data ingesting to run fully asynchronously. Instead of processing standalone snapshots,",
                     "# we stream batch OHLCV data into dynamic timeframes and run matrix calculation windows on live memory.",
@@ -331,17 +333,19 @@
                     "    await self.broadcast_pipeline_metrics(df.to_dict(orient='records'))"
                 ]
             },
-            {
-                id: "commit-3",
+            "commit-3": {
+                isProject: true,
+                projectName: "Optimized Concurrency API",
                 hash: "8b9f02",
-                timestamp: "2026.04",
-                tag: "perf(api)",
+                timestamp: "2025.07",
+                tag: "Performance",
                 tagType: "performance",
                 message: "Architected throttled, request-limited infrastructure pipelines with precise serialization optimization.",
                 file: "core/restaurant_api.py",
                 additions: 48,
                 deletions: 18,
-                redBlock: [
+                title1: "⚠️ PROBLEM STATEMENT & LEGACY CONSTRAINTS",
+                content1: [
                     "# [PROBLEM STATEMENT]",
                     "# - Heavy serialization layers caused massive API bottlenecks under high-concurrency requests.",
                     "# - Suboptimal nested database queries created classic 'N+1 lookups', leaking memory,",
@@ -351,7 +355,8 @@
                     "    data = Restaurant.objects.all().order_by('-score')",
                     "    return Response(DeepNestedSerializer(data, many=True).data) # Memory Leak Vector"
                 ],
-                greenBlock: [
+                title2: "🚀 APPROACH & TECH STACK JUSTIFICATION",
+                content2: [
                     "# [THE APPROACH]",
                     "# Built a strict write-through caching layer. Flattened the API data transfer objects (DTO), implemented",
                     "# rate-limiting thresholds directly onto public routes, and decoupled core database hits via an in-memory data cache.",
@@ -372,17 +377,19 @@
                     "    return Response(serialized_payload)"
                 ]
             },
-            {
-                id: "commit-4",
+            "commit-4": {
+                isProject: true,
+                projectName: "Secure IoT Watt Gateway",
                 hash: "5a1c89",
-                timestamp: "2026.03",
-                tag: "feat(iot)",
+                timestamp: "2025.4",
+                tag: "Hardware Sync",
                 tagType: "feature",
                 message: "Bridges hardware telemetries with a secure online control ledger.",
                 file: "gateway/smart_watt_secure.py",
                 additions: 39,
                 deletions: 14,
-                redBlock: [
+                title1: "⚠️ PROBLEM STATEMENT & LEGACY CONSTRAINTS",
+                content1: [
                     "# [PROBLEM STATEMENT]",
                     "# - Incoming hardware device data streams lacked validation, leaving nodes open to spoofing attacks.",
                     "# - Brittle, manual recurring billing routines failed silently, dropping connection cycles and",
@@ -391,7 +398,8 @@
                     "def handle_hardware_consumption(device_payload):",
                     "    process_raw_bill_math(device_payload['watts']) # Untrusted telemetry source injection"
                 ],
-                greenBlock: [
+                title2: "🚀 APPROACH & TECH STACK JUSTIFICATION",
+                content2: [
                     "# [THE APPROACH]",
                     "# Enforced an asymmetric signature layer inside the hardware telemetry processing pipe.",
                     "# Created an internal guard module that filters anomalous consumption bursts and handles payments via",
@@ -414,17 +422,19 @@
                     "        )"
                 ]
             },
-            {
-                id: "commit-5",
+            "commit-5": {
+                isProject: true,
+                projectName: "Land Registry Ledger Node",
                 hash: "9d4f23",
-                timestamp: "2026.02",
-                tag: "sec(ledger)",
+                timestamp: "2024.07",
+                tag: "Security Lock",
                 tagType: "security",
                 message: "Protected critical database integrity layers via strict asymmetric safety isolation.",
                 file: "ledger/land_registry.py",
                 additions: 31,
                 deletions: 11,
-                redBlock: [
+                title1: "⚠️ PROBLEM STATEMENT & LEGACY CONSTRAINTS",
+                content1: [
                     "# [PROBLEM STATEMENT]",
                     "# - Public municipal ledger data transfers were vulnerable to data race conditions and duplicate overrides.",
                     "# - Raw SQL concatenation allowed unauthorized users to escalate privileges and hijack property files.",
@@ -432,7 +442,8 @@
                     "def execute_registry_transfer(property_id, owner_context):",
                     "    db.query(f\"UPDATE registry SET owner = '{owner_context}' WHERE id = {property_id}\") # SQL Injection Vector"
                 ],
-                greenBlock: [
+                title2: "🚀 APPROACH & TECH STACK JUSTIFICATION",
+                content2: [
                     "# [THE APPROACH]",
                     "# Enforced a thread-isolated serialization model, blocking race conditions entirely during state switches.",
                     "# All queries were parameterized via strong models, backed by an immutable Role-Based Access Control matrix.",
@@ -449,23 +460,26 @@
                     "            RegistryLedgerNode.objects.filter(id=property_id).update(owner_record=owner_context.signature_hash)"
                 ]
             },
-            {
-                id: "commit-6",
+            "commit-6": {
+                isProject: true,
+                projectName: "Core System Architect Ruleset",
                 hash: "v1.0.0",
-                timestamp: "2026.01",
-                tag: "release(core)",
+                timestamp: "2024.03",
+                tag: "Release Baseline",
                 tagType: "release",
                 message: "Baseline Core Architecture Specification and Production Paradigm Framework JSON Definition.",
                 file: "config/paradigms.json",
                 additions: 25,
                 deletions: 2,
-                redBlock: [
+                title1: "⚠️ PROBLEM STATEMENT & SYSTEMTechnical Debt Vectors",
+                content1: [
                     "// [PROBLEM STATEMENT]",
                     "// - System lacks foundational rules, engineering guidelines, or concrete quality standards.",
                     "// - Results in ad-hoc hacky engineering decisions, scaling technical debt blocks exponentially.",
                     "{}"
                 ],
-                greenBlock: [
+                title2: "🚀 THE SYSTEM PARADIGM APPROACH",
+                content2: [
                     "// [THE SYSTEM PARADIGM APPROACH]",
                     "// Declared an explicit, version-controlled operational blueprint file defining core development philosophies.",
                     "// This file serves as the strict baseline ruleset for all engineers contributing to this system repository.",
@@ -480,10 +494,9 @@
                     "}"
                 ]
             }
-        ];
+        };
 
-        // APPARATUS VIEWPORT CONTROLLER ARCHITECTURE
-        let activeTabContext = 'git'; // 'tree', 'git', 'diff'
+        let activeTabContext = 'git'; 
         const rightStagePane = document.getElementById('right-workspace-pane');
 
         function switchWorkspaceTab(context) {
@@ -491,24 +504,22 @@
             const paneTree = document.getElementById('pane-tree-view');
             const paneGit = document.getElementById('pane-git-view');
 
-            // Handle Sub-panel visibility switches
             if (context === 'tree') {
                 paneTree.classList.remove('hidden');
                 paneGit.classList.add('hidden');
-                rightStagePane.classList.add('translate-x-full'); // slide view back on mobile
+                rightStagePane.classList.add('translate-x-full'); 
             } else if (context === 'git') {
                 paneGit.classList.remove('hidden');
                 paneTree.classList.add('hidden');
-                rightStagePane.classList.add('translate-x-full'); // slide view back on mobile
+                rightStagePane.classList.add('translate-x-full'); 
             } else if (context === 'diff') {
-                rightStagePane.classList.remove('translate-x-full'); // focus staging on mobile viewport
+                rightStagePane.classList.remove('translate-x-full'); 
             }
 
             updateTabVisualStates();
         }
 
         function updateTabVisualStates() {
-            // Bind Elements
             const tTree = document.getElementById('tab-handle-tree');
             const tGit = document.getElementById('tab-handle-git');
             const tDiff = document.getElementById('tab-handle-diff');
@@ -520,144 +531,151 @@
             const activeClassDesk = "px-4 py-2 border-t-2 border-x border-t-[#FFB236] border-x-zinc-800/80 panel-surface text-zinc-100 flex items-center space-x-1.5 font-medium relative top-[1px] bg-[#0B0D13]";
             const inactiveClassDesk = "px-4 py-2 border-t border-x border-transparent text-zinc-500 hover:text-zinc-300 cursor-pointer flex items-center space-x-1.5 transition-all";
 
-            // Desk handles re-render
             tTree.className = activeTabContext === 'tree' ? activeClassDesk : inactiveClassDesk;
             tGit.className = activeTabContext === 'git' ? activeClassDesk : inactiveClassDesk;
             tDiff.className = activeTabContext === 'diff' ? activeClassDesk : inactiveClassDesk;
 
-            // Mobile active navigation text markers colors
             mTree.className = `flex flex-col items-center justify-center space-y-0.5 w-20 py-1 ${activeTabContext === 'tree' ? 'text-[#FFB236]' : 'text-zinc-500'}`;
             mGit.className = `flex flex-col items-center justify-center space-y-0.5 w-20 py-1 ${activeTabContext === 'git' ? 'text-[#FFB236]' : 'text-zinc-500'}`;
             mDiff.className = `flex flex-col items-center justify-center space-y-0.5 w-20 py-1 ${activeTabContext === 'diff' ? 'text-[#FFB236]' : 'text-zinc-500'}`;
         }
 
-        // DESKTOP INTERFACE DOM BINDERS
         document.getElementById('tab-handle-tree').addEventListener('click', () => switchWorkspaceTab('tree'));
         document.getElementById('tab-handle-git').addEventListener('click', () => switchWorkspaceTab('git'));
         document.getElementById('tab-handle-diff').addEventListener('click', () => switchWorkspaceTab('diff'));
 
-        // MOBILE STACK DOM BINDERS 
         document.getElementById('mobile-nav-tree').addEventListener('click', () => switchWorkspaceTab('tree'));
         document.getElementById('mobile-nav-git').addEventListener('click', () => switchWorkspaceTab('git'));
         document.getElementById('mobile-nav-diff').addEventListener('click', () => switchWorkspaceTab('diff'));
 
         function mobileReturnToNavigation() {
-            switchWorkspaceTab('git');
+            switchWorkspaceTab(activeTabContext === 'diff' ? 'tree' : 'git');
         }
 
-        function routeFileSelect(commitId) {
-            activateCommitNode(commitId);
-            // Auto-advance to split review code screen on phone aspect frames
-            if (window.innerWidth < 768) {
-                switchWorkspaceTab('diff');
-            } else {
-                switchWorkspaceTab('git');
-            }
+        function routeFileSelect(id) {
+            activateNode(id);
+            switchWorkspaceTab('diff');
         }
 
-        // RENDER METHODSTREAM LEDGER CARD TILES
-        function buildCommitGraphList() {
-            const container = document.getElementById('commit-container');
-            container.innerHTML = '';
+        // BUILD DYNAMIC WORKSPACE INTERFACES (GIT TIMELINE + FILE EXPLORER)
+        function initializeWorkspaceData() {
+            const commitContainer = document.getElementById('commit-container');
+            const treeContainer = document.getElementById('file-tree-projects-container');
+            
+            commitContainer.innerHTML = '';
+            treeContainer.innerHTML = '';
 
-            COMMIT_MATRIX.forEach((commit, idx) => {
+            Object.keys(COMPONENT_REGISTRY).forEach((id) => {
+                const node = COMPONENT_REGISTRY[id];
+                if (!node.isProject) return;
+
+                // 1. Inject cleanly labeled Project components into Left Commit Graph Sidebar
                 const nodeButton = document.createElement('button');
-                nodeButton.id = commit.id;
-                nodeButton.className = `w-full text-left p-3 rounded-lg border transition-all duration-150 block relative cursor-pointer group ${
-                    idx === 0 
-                    ? 'bg-[#1A1D29]/70 border-zinc-700/80 shadow-md shadow-black/40 ring-1 ring-amber-500/20' 
-                    : 'bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800'
-                }`;
+                nodeButton.id = `node-${id}`;
+                nodeButton.className = "w-full text-left p-3 rounded-lg border transition-all duration-150 block relative cursor-pointer group bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800";
 
-                let tagColorStyle = "bg-purple-950/50 text-purple-400 border-purple-800/40";
-                if(commit.tagType === 'performance') tagColorStyle = "bg-sky-950/50 text-sky-400 border-sky-800/40";
-                if(commit.tagType === 'security') tagColorStyle = "bg-red-950/50 text-red-400 border-red-800/40";
-                if(commit.tagType === 'release') tagColorStyle = "bg-amber-950/50 text-[#FFB236] border-amber-800/40";
+                let tagStyle = "bg-emerald-950/50 text-emerald-400 border-emerald-800/40";
+                if(node.tagType === 'performance') tagStyle = "bg-sky-950/50 text-sky-400 border-sky-800/40";
+                if(node.tagType === 'security') tagStyle = "bg-red-950/50 text-red-400 border-red-800/40";
+                if(node.tagType === 'release') tagStyle = "bg-purple-950/50 text-purple-400 border-purple-800/40";
 
                 nodeButton.innerHTML = `
                     <div class="flex items-center justify-between mb-1.5 font-mono text-[10px]">
                         <div class="flex items-center space-x-2">
-                            <span class="text-zinc-500 font-bold group-hover:text-zinc-300">${commit.hash}</span>
-                            <span class="px-1.5 py-0.5 border text-[9px] font-semibold rounded ${tagColorStyle}">${commit.tag}</span>
+                            <span class="text-[#FFB236] font-bold tracking-wider">${node.projectName}</span>
+                            <span class="px-1.5 py-0.5 border text-[9px] font-semibold rounded ${tagStyle}">${node.tag}</span>
                         </div>
-                        <span class="text-zinc-600 font-medium">${commit.timestamp}</span>
+                        <span class="text-zinc-600 font-medium">${node.timestamp}</span>
                     </div>
-                    <p class="text-zinc-300 font-sans tracking-wide text-xs line-clamp-2 leading-snug group-hover:text-zinc-100">${commit.message}</p>
+                    <p class="text-zinc-400 font-sans tracking-wide text-xs line-clamp-2 leading-snug group-hover:text-zinc-200">${node.message}</p>
                 `;
+                nodeButton.addEventListener('click', () => routeFileSelect(id));
+                commitContainer.appendChild(nodeButton);
 
-                nodeButton.addEventListener('click', () => {
-                    activateCommitNode(commit.id);
-                    if (window.innerWidth < 768) {
-                        switchWorkspaceTab('diff');
-                    }
-                });
-
-                container.appendChild(nodeButton);
+                // 2. Inject matching Source Tree File Nodes into File Explorer View 
+                const treeFileRow = document.createElement('div');
+                treeFileRow.className = "py-1 px-2 hover:bg-[#1A1D29]/40 hover:text-white cursor-pointer rounded flex items-center justify-between group";
+                
+                // Get clean file name without long directory paths
+                const displayFileName = node.file.split('/').pop();
+                
+                treeFileRow.innerHTML = `
+                    <span>📄 ${displayFileName}</span>
+                    <span class="text-[9px] text-amber-500 opacity-80 group-hover:opacity-100 transition-opacity">project</span>
+                `;
+                treeFileRow.addEventListener('click', () => routeFileSelect(id));
+                treeContainer.appendChild(treeFileRow);
             });
         }
 
-        // INTERACTIVE CORE SWAP RENDER ENGINE
-        function activateCommitNode(targetId) {
-            COMMIT_MATRIX.forEach(commit => {
-                const element = document.getElementById(commit.id);
-                if (element) {
-                    if (commit.id === targetId) {
-                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-150 block relative cursor-pointer group bg-[#1A1D29]/70 border-zinc-700/80 shadow-md shadow-black/40 ring-1 ring-amber-500/20";
-                    } else {
-                        element.className = "w-full text-left p-3 rounded-lg border transition-all duration-150 block relative cursor-pointer group bg-transparent border-zinc-900/50 hover:bg-[#1A1D29]/30 hover:border-zinc-800";
-                    }
-                }
-            });
+        function activateNode(targetId) {
+            const payload = COMPONENT_REGISTRY[targetId];
+            if (!payload) return;
 
-            const currentPayload = COMMIT_MATRIX.find(c => c.id === targetId);
-            if (!currentPayload) return;
+            document.getElementById('diff-file-path').innerText = `📄 ${payload.file}`;
+            
+            const stats = document.getElementById('diff-stats-pill');
+            if (payload.isProject) {
+                stats.innerHTML = `<span class="text-emerald-400">+${payload.additions}</span> <span class="text-zinc-600 px-0.5">/</span> <span class="text-red-400">-${payload.deletions}</span>`;
+            } else {
+                stats.innerHTML = `<span class="text-purple-400 font-mono text-[10px] uppercase font-bold px-1.5 py-0.5 bg-purple-950/20 border border-purple-900/30 rounded">${payload.meta}</span>`;
+            }
 
-            document.getElementById('diff-file-path').innerText = `📄 ${currentPayload.file}`;
-            document.getElementById('diff-stats-pill').innerHTML = `
-                <span class="text-emerald-400 font-medium">+${currentPayload.additions}</span> 
-                <span class="text-zinc-600 text-[9px] px-0.5">/</span> 
-                <span class="text-red-400 font-medium">-${currentPayload.deletions}</span>
-            `;
+            // Section 1 Rendering Engine
+            const title1 = document.getElementById('primary-view-title');
+            title1.innerText = payload.title1;
+            if(!payload.isProject) {
+                title1.className = "w-full border-b border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-purple-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider";
+            } else {
+                title1.className = "w-full border-b border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-red-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider";
+            }
 
-            // Populate Red Blocks
             const redContainer = document.getElementById('diff-red-container');
             redContainer.innerHTML = '';
-            currentPayload.redBlock.forEach((line, index) => {
+            payload.content1.forEach((line, index) => {
                 const lineRow = document.createElement('div');
-                lineRow.className = "flex w-full border-l-2 border-red-500/80 text-red-200/90 hover:bg-red-950/20 transition-colors py-0.5";
+                lineRow.className = `flex w-full text-zinc-300 hover:bg-zinc-900/10 transition-colors py-0.5 border-l-2 ${payload.isProject ? 'border-red-500/80 text-red-200/90' : 'border-purple-500/40'}`;
                 lineRow.innerHTML = `
-                    <div class="line-num-width text-right pr-3 select-none text-red-800/60 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
+                    <div class="line-num-width text-right pr-3 select-none text-zinc-600 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
                     <div class="pl-3 whitespace-pre font-mono tracking-wide overflow-x-auto text-[13px]">${escapeHtml(line)}</div>
                 `;
                 redContainer.appendChild(lineRow);
             });
 
-            // Populate Green Blocks
+            // Section 2 Rendering Engine
+            const title2 = document.getElementById('primary-view-secondary-title');
             const greenContainer = document.getElementById('diff-green-container');
-            greenContainer.innerHTML = '';
-            currentPayload.greenBlock.forEach((line, index) => {
-                const lineRow = document.createElement('div');
-                lineRow.className = "flex w-full border-l-2 border-emerald-500/80 text-emerald-100 hover:bg-emerald-950/20 transition-colors py-0.5";
-                lineRow.innerHTML = `
-                    <div class="line-num-width text-right pr-3 select-none text-emerald-800/60 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
-                    <div class="pl-3 whitespace-pre font-mono tracking-wide overflow-x-auto text-[13px]">${escapeHtml(line)}</div>
-                `;
-                greenContainer.appendChild(lineRow);
-            });
+            
+            if (payload.content2 && payload.content2.length > 0) {
+                title2.classList.remove('hidden');
+                title2.innerText = payload.title2;
+                title2.className = "w-full border-y border-zinc-900 bg-zinc-950/40 px-3 md:px-4 py-2 text-emerald-400 select-none text-[10px] md:text-[11px] uppercase font-bold tracking-wider mt-2";
+                
+                greenContainer.innerHTML = '';
+                payload.content2.forEach((line, index) => {
+                    const lineRow = document.createElement('div');
+                    lineRow.className = "flex w-full border-l-2 border-emerald-500/80 text-emerald-100 hover:bg-emerald-950/20 transition-colors py-0.5";
+                    lineRow.innerHTML = `
+                        <div class="line-num-width text-right pr-3 select-none text-emerald-800/60 border-r border-zinc-900/40 text-[10px] font-mono">${index + 1}</div>
+                        <div class="pl-3 whitespace-pre font-mono tracking-wide overflow-x-auto text-[13px]">${escapeHtml(line)}</div>
+                    `;
+                    greenContainer.appendChild(lineRow);
+                });
+            } else {
+                title2.classList.add('hidden');
+                greenContainer.innerHTML = '';
+            }
         }
 
         function escapeHtml(text) {
             return text
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
+                .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            buildCommitGraphList();
-            activateCommitNode('commit-1');
+            initializeWorkspaceData();
+            activateNode('profile'); 
         });
     </script>
 </body>
